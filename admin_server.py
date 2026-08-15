@@ -36,6 +36,7 @@ def add_product():
         color = data.get('color', '')
         style = data.get('style', '')
         desc = data.get('description', '')
+        stock = data.get('stock')
         images_b64 = data.get('images', [])
 
         if not name or not price or not images_b64:
@@ -77,7 +78,7 @@ def add_product():
     ],
     rating: 5.0,
     color: "{safe_color}",
-    style: "{safe_style}"{f", description: {chr(34)}{safe_desc}{chr(34)}" if desc else ""}
+    style: "{safe_style}"{f", description: {chr(34)}{safe_desc}{chr(34)}" if desc else ""}{f", stock: {stock}" if stock else ""}
   }}
 '''
 

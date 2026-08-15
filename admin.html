@@ -66,6 +66,10 @@
                         <input type="number" id="pprice" placeholder="1500" />
                     </div>
                     <div>
+                        <label>المخزون (اختياري، اتركيه فارغ إذا الكمية عادية)</label>
+                        <input type="number" id="pstock" placeholder="مثلا: 3" />
+                    </div>
+                    <div>
                         <label>القسم</label>
                         <select id="pcat">
                             <option value="lingerie">👙 ملابس داخلية نسائية</option>
@@ -532,6 +536,7 @@
             const color = document.getElementById('pcolor').value.trim();
             const style = document.getElementById('pstyle').value.trim();
             const desc = document.getElementById('pdesc').value.trim();
+            const stock = document.getElementById('pstock').value.trim();
 
             if (!name || !price || selectedImages.length === 0) {
                 alert('عمري، خاصك تعبي على الأقل: الاسم، السعر، وصورة وحدة');
@@ -550,6 +555,7 @@
                 style: style
             };
             if (desc) product.description = desc;
+            if (stock) product.stock = parseInt(stock);
 
             document.getElementById('successMsg').innerHTML = '⏳ جاري النشر...';
             document.getElementById('successMsg').classList.add('show');

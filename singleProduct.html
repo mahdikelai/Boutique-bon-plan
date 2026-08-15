@@ -292,6 +292,12 @@
     <div class="container" id="productContainer">
         <h1 id="productName">جاري التحميل...</h1>
         <div class="price" id="productPrice"></div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+            <span style="background:var(--pink-soft,#fdeef3); color:var(--pink,#e6007e); padding:5px 10px; border-radius:20px; font-size:11px; font-weight:700;">✅ جودة مضمونة</span>
+            <span style="background:var(--pink-soft,#fdeef3); color:var(--pink,#e6007e); padding:5px 10px; border-radius:20px; font-size:11px; font-weight:700;">💵 الدفع عند الاستلام</span>
+            <span style="background:var(--pink-soft,#fdeef3); color:var(--pink,#e6007e); padding:5px 10px; border-radius:20px; font-size:11px; font-weight:700;">🚚 توصيل 58 ولاية</span>
+        </div>
+        <div id="stockNotice" style="display:none; color:#e6007e; font-size:13px; font-weight:700; margin-bottom:10px;"></div>
         <div class="gallery" id="productGallery"></div>
         <p id="productBrand"></p>
         <p id="productDescription" style="color:#555; font-size:14px; line-height:1.6; margin:10px 0;"></p>
@@ -346,6 +352,11 @@
                 document.getElementById('productName').textContent = product.name;
                 document.getElementById('productPrice').textContent = product.price + ' دج';
                 document.getElementById('productBrand').textContent = 'ماركة: ' + (product.brand || 'Boutique Bon Plan');
+                if (product.stock && product.stock > 0 && product.stock <= 5) {
+                    const stockEl = document.getElementById('stockNotice');
+                    stockEl.textContent = '🔥 باقي ' + product.stock + ' قطع فقط!';
+                    stockEl.style.display = 'block';
+                }
                 const descEl = document.getElementById('productDescription');
                 if (product.description) {
                     descEl.textContent = product.description;
