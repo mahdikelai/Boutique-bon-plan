@@ -88,7 +88,7 @@ const products = [
   }
 
   ,{
-    id: 1786835329992, category: "robes",
+    id: 1786835329992, category: "promotions",
     brand: "Boutique Bon Plan",
     name: "فوندغوب مشرشفة موتيف بابيو",
     price: 1200,
