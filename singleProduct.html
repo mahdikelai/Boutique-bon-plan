@@ -272,7 +272,10 @@
         <div class="price" id="productPrice"></div>
         <div class="gallery" id="productGallery"></div>
         <p id="productBrand"></p>
-        <button class="add-to-cart-btn" onclick="addToCart()">🛒 أضف إلى السلة</button>
+        <div style="display:flex; gap:10px;">
+            <button class="add-to-cart-btn" onclick="addToCart()" style="flex:1;">🛒 أضف إلى السلة</button>
+            <a id="orderNowBtn" href="#" style="flex:1; text-align:center; background:#e91e63; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; display:flex; align-items:center; justify-content:center;">🛍️ أطلب الآن</a>
+        </div>
         <div class="cart-message" id="cartMessage">✅ تمت الإضافة إلى السلة!</div>
     </div>
 
@@ -308,6 +311,8 @@
                     return;
                 }
                 currentProduct = product;
+                const orderBtn = document.getElementById('orderNowBtn');
+                if (orderBtn) orderBtn.href = 'order.html?id=' + product.id;
                 document.getElementById('productName').textContent = product.name;
                 document.getElementById('productPrice').textContent = product.price + ' دج';
                 document.getElementById('productBrand').textContent = 'ماركة: ' + (product.brand || 'Boutique Bon Plan');
