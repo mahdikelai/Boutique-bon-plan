@@ -243,6 +243,25 @@
         }
     </style>
     <script src="custom-products.js"></script>
+
+    <style>
+        .order-now-btn {
+            background: var(--pink-soft, #fdeef3);
+            color: var(--pink, #e6007e);
+            border: 2px solid var(--pink, #e6007e);
+            padding: 8px 0;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            animation: pulseBtn 1.2s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes pulseBtn {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,20,90,0.5); background: var(--pink-soft, #fdeef3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 10px 4px rgba(212,20,90,0.35); background: #ffe0ec; }
+        }
+    </style>
 </head>
 <body>
     <div class="marquee">
@@ -274,7 +293,7 @@
         <p id="productBrand"></p>
         <div style="display:flex; gap:10px;">
             <button class="add-to-cart-btn" onclick="addToCart()" style="flex:1;">🛒 أضف إلى السلة</button>
-            <a id="orderNowBtn" href="#" style="flex:1; text-align:center; background:#e91e63; color:white; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; display:flex; align-items:center; justify-content:center;">🛍️ أطلب الآن</a>
+            <a id="orderNowBtn" href="#" class="order-now-btn" style="flex:1; text-align:center; display:flex; align-items:center; justify-content:center;">🛍️ أطلب الآن</a>
         </div>
         <div class="cart-message" id="cartMessage">✅ تمت الإضافة إلى السلة!</div>
     </div>
