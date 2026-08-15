@@ -459,5 +459,79 @@ def save_colors():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+REVIEWS_FILE = os.path.join(BASE_DIR, "reviews.json")
+
+@app.route('/get-reviews', methods=['GET'])
+def get_reviews():
+    try:
+        product_id = request.args.get('product_id')
+        with open(REVIEWS_FILE, encoding='utf-8') as f:
+            reviews = json.load(f)
+        if product_id:
+            reviews = [r for r in reviews if str(r.get('product_id')) == str(product_id)]
+        return jsonify(reviews)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/add-review', methods=['POST'])
+def add_review():
+    try:
+        data = request.get_json()
+        product_id = data.get('product_id')
+        name = data.get('name', '').strip()
+        rating = int(data.get('rating', 5))
+        text = data.get('text', '').strip()
+
+        if not product_id or not name or not text:
+            return jsonify({"error": "بيانات ناقصة"}), 400
+
+        with open(REVIEWS_FILE, encoding='utf-8') as f:
+            reviews = json.load(f)
+
+        reviews.append({
+            "id": int(datetime.now().timestamp() * 1000),
+            "product_id": product_id,
+            "name": name,
+            "rating": rating,
+            "text": text
+        })
+
+        with open(REVIEWS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(reviews, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'تقييم جديد: {name}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/delete-review', methods=['POST'])
+def delete_review():
+    try:
+        data = request.get_json()
+        review_id = data.get('id')
+
+        with open(REVIEWS_FILE, encoding='utf-8') as f:
+            reviews = json.load(f)
+
+        new_reviews = [r for r in reviews if r['id'] != review_id]
+        if len(new_reviews) == len(reviews):
+            return jsonify({"error": "ماتلقاش التقييم"}), 404
+
+        with open(REVIEWS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(new_reviews, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', 'حذف تقييم'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

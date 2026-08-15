@@ -52,6 +52,7 @@
             <button class="tab-btn" onclick="showTab('categories')">📂 الأقسام</button>
             <button class="tab-btn" onclick="showTab('banners')">🖼️ البانرات</button>
             <button class="tab-btn" onclick="showTab('colors')">🎨 الألوان</button>
+            <button class="tab-btn" onclick="showTab('reviews')">⭐ التقييمات</button>
         </div>
 
         <div class="tab-content active" id="tab-add">
@@ -156,6 +157,22 @@
             <div id="colorsForm"></div>
             <button onclick="saveColors()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-top:10px;">💾 حفظ ونشر الألوان</button>
         </div>
+
+        <div class="tab-content" id="tab-reviews">
+            <h3 style="margin-bottom:10px;">➕ إضافة تقييم</h3>
+            <select id="reviewProductId" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;"></select>
+            <input type="text" id="reviewName" placeholder="اسم الزبونة" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <select id="reviewRating" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;">
+                <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                <option value="4">⭐⭐⭐⭐ (4)</option>
+                <option value="3">⭐⭐⭐ (3)</option>
+            </select>
+            <textarea id="reviewText" placeholder="نص التقييم..." style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd; min-height:70px;"></textarea>
+            <button onclick="addReview()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-bottom:16px;">➕ إضافة التقييم</button>
+
+            <h3 style="margin-bottom:10px;">⭐ كل التقييمات</h3>
+            <div id="reviewsList"></div>
+        </div>
     </div>
 
     <script>
@@ -171,6 +188,93 @@
             if (tab === 'categories') renderCategoriesList();
             if (tab === 'banners') renderBannersList();
             if (tab === 'colors') renderColorsForm();
+            if (tab === 'reviews') renderReviewsTab();
+        }
+
+        function renderReviewsTab() {
+            fetch('http://localhost:5000/get-products')
+                .then(res => res.json())
+                .then(products => {
+                    const select = document.getElementById('reviewProductId');
+                    select.innerHTML = products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+                });
+            renderReviewsList();
+        }
+
+        function renderReviewsList() {
+            const list = document.getElementById('reviewsList');
+            list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-reviews')
+                .then(res => res.json())
+                .then(reviews => {
+                    if (!reviews.length) {
+                        list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش تقييمات حتى الآن</p>';
+                        return;
+                    }
+                    list.innerHTML = '';
+                    reviews.forEach(r => {
+                        const item = document.createElement('div');
+                        item.style.cssText = 'padding:8px 0; border-bottom:1px solid #eee; font-size:12px;';
+                        item.innerHTML = `
+                            <b>${r.name}</b> ${'⭐'.repeat(r.rating)}<br>
+                            <span style="color:#666;">${r.text}</span><br>
+                            <button onclick="deleteReview(${r.id})" style="margin-top:4px; padding:4px 8px; background:#999; color:white; border:none; border-radius:6px; font-size:11px;">🗑️ حذف</button>
+                        `;
+                        list.appendChild(item);
+                    });
+                })
+                .catch(() => {
+                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
+        }
+
+        function addReview() {
+            const productId = document.getElementById('reviewProductId').value;
+            const name = document.getElementById('reviewName').value.trim();
+            const rating = document.getElementById('reviewRating').value;
+            const text = document.getElementById('reviewText').value.trim();
+
+            if (!name || !text) {
+                alert('عمري، خاصك تعبي الاسم والتقييم');
+                return;
+            }
+
+            fetch('http://localhost:5000/add-review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product_id: productId, name: name, rating: rating, text: text })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم إضافة التقييم ونشره');
+                    document.getElementById('reviewName').value = '';
+                    document.getElementById('reviewText').value = '';
+                    renderReviewsList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
+        }
+
+        function deleteReview(id) {
+            if (!confirm('متأكدة تحبي تحذفي هذا التقييم؟')) return;
+            fetch('http://localhost:5000/delete-review', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم الحذف ونشره');
+                    renderReviewsList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
         }
 
         const colorLabels = {
