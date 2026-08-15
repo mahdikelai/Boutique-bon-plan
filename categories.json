@@ -1,0 +1,42 @@
+[
+  {
+    "id": "lingerie",
+    "image": "images/categories/lingerie.png",
+    "label": "👙 ملابس داخلية نسائية"
+  },
+  {
+    "id": "ensembles",
+    "image": "images/categories/ensembles.png",
+    "label": "🎀 أطقم نسائية"
+  },
+  {
+    "id": "bodysuits",
+    "image": "images/categories/bodysuits.png",
+    "label": "✨ بودي نسائي"
+  },
+  {
+    "id": "robes",
+    "image": "images/categories/robes.png",
+    "label": "👗 فساتين وملابس نسائية"
+  },
+  {
+    "id": "sleepwear",
+    "image": "images/categories/sleepwear.png",
+    "label": "🌙 ملابس النوم"
+  },
+  {
+    "id": "bridal",
+    "image": "images/categories/bridal.png",
+    "label": "👰🏻‍♀️ تشكيلة العروس"
+  },
+  {
+    "id": "shapewear",
+    "image": "images/categories/shapewear.png",
+    "label": "💎 ملابس شدّ الجسم"
+  },
+  {
+    "id": "promotions",
+    "image": "images/categories/promotions.png",
+    "label": "🔥 العروض والتخفيضات"
+  }
+]

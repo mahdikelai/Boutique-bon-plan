@@ -129,20 +129,7 @@
 
     <!-- الكاروسيل -->
     <div class="carousel">
-        <div class="carousel-track" id="carouselTrack">
-            <div class="carousel-slide" style="background: linear-gradient(135deg, #e6007e, #d4af37);">
-                <div class="caption">🎉 تخفيضات لحد 50%</div>
-            </div>
-            <a href="category.html?cat=packs" class="carousel-slide" style="background-image: url('images/banners/pack-banner.png'); background-size: cover; background-position: center; position: relative; text-decoration: none;">
-                <div style="position: absolute; right: 6%; top: 50%; transform: translateY(-50%); text-align: center;">
-                    <div style="background: rgba(230,0,126,0.92); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 13px; margin-bottom: 4px; white-space: nowrap;">🎁 عروض الباك</div>
-                    <div style="background: rgba(26,26,26,0.85); color: #d4af37; padding: 4px 14px; border-radius: 20px; font-weight: 800; font-size: 11px; white-space: nowrap;">بأسعار ممتازة</div>
-                </div>
-            </a>
-            <a href="delivery-prices.html" class="carousel-slide" style="background-image: url('images/banners/delivery-banner-57.png'); background-size: cover; background-position: center; text-decoration: none; display: block;">
-            
-            </a>
-        </div>
+        <div class="carousel-track" id="carouselTrack"></div>
         <button class="carousel-arrow prev" onclick="moveCarousel(-1)">‹</button>
         <button class="carousel-arrow next" onclick="moveCarousel(1)">›</button>
     </div>
@@ -151,43 +138,7 @@
     <!-- شبكة الأقسام 3 أعمدة -->
     <div class="cat-grid-section">
         <h2>📌 تسوقي حسب القسم</h2>
-        <div class="cat-grid">
-            <a href="category.html?cat=lingerie">
-                <img src="images/categories/lingerie.png" alt="👙 ملابس داخلية نسائية" />
-                <div class="overlay"><span>👙 ملابس داخلية نسائية</span></div>
-            </a>
-            <a href="category.html?cat=ensembles">
-                <img src="images/categories/ensembles.png" alt="🎀 أطقم نسائية" />
-                <div class="overlay"><span>🎀 أطقم نسائية</span></div>
-            </a>
-            <a href="category.html?cat=bodysuits">
-                <img src="images/categories/bodysuits.png" alt="✨ بودي نسائي" />
-                <div class="overlay"><span>✨ بودي نسائي</span></div>
-            </a>
-            <a href="category.html?cat=robes">
-                <img src="images/categories/robes.png" alt="👗 فساتين وملابس نسائية" />
-                <div class="overlay"><span>👗 فساتين وملابس نسائية</span></div>
-            </a>
-            <a href="category.html?cat=sleepwear">
-                <img src="images/categories/sleepwear.png" alt="🌙 ملابس النوم" />
-                <div class="overlay"><span>🌙 ملابس النوم</span></div>
-            </a>
-            <a href="category.html?cat=bridal">
-                <img src="images/categories/bridal.png" alt="👰🏻‍♀️ تشكيلة العروس" />
-                <div class="overlay"><span>👰🏻‍♀️ تشكيلة العروس</span></div>
-            </a>
-            <a href="category.html?cat=shapewear">
-                <img src="images/categories/shapewear.png" alt="💎 ملابس شدّ الجسم" />
-                <div class="overlay"><span>💎 ملابس شدّ الجسم</span></div>
-            </a>
-            <a href="category.html?cat=promotions">
-                <img src="images/categories/promotions.png" alt="🔥 العروض والتخفيضات" />
-                <div class="overlay"><span>🔥 العروض والتخفيضات</span></div>
-            </a>
-            <a href="category.html?cat=all" style="background: linear-gradient(135deg, var(--pink) 0%, var(--gold) 55%, var(--black) 100%); display: flex; align-items: center; justify-content: center;">
-                <span style="color: white; font-weight: 800; font-size: 14px; text-align: center; padding: 8px;">🛍️ عرض كل المنتجات</span>
-            </a>
-        </div>
+        <div class="cat-grid" id="catGridHome"></div>
     </div>
 <!-- Bottom Nav ثابت -->
     <div class="bottom-nav">
@@ -244,15 +195,10 @@
         }
 
         let currentSlide = 0;
+        let slides = [];
         const track = document.getElementById('carouselTrack');
-        const slides = document.querySelectorAll('.carousel-slide');
         const dotsContainer = document.getElementById('carouselDots');
-        slides.forEach((_, i) => {
-            const dot = document.createElement('span');
-            if (i === 0) dot.classList.add('active');
-            dot.onclick = () => goToSlide(i);
-            dotsContainer.appendChild(dot);
-        });
+
         function updateCarousel() {
             track.style.transform = `translateX(${currentSlide * 100}%)`;
             document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
@@ -262,9 +208,46 @@
             updateCarousel();
         }
         function goToSlide(i) { currentSlide = i; updateCarousel(); }
-        setInterval(() => moveCarousel(1), 4000);
+
+        fetch('banners.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(banners => {
+                track.innerHTML = banners.map(b => {
+                    const bg = b.image
+                        ? `background-image: url('${b.image}'); background-size: cover; background-position: center;`
+                        : `background: ${b.gradient || 'var(--pink-soft)'};`;
+                    const caption = b.caption ? `<div class="caption">${b.caption}</div>` : '';
+                    const tag = b.link ? 'a' : 'div';
+                    const hrefAttr = b.link ? `href="${b.link}"` : '';
+                    return `<${tag} ${hrefAttr} class="carousel-slide" style="${bg} text-decoration:none;">${caption}</${tag}>`;
+                }).join('');
+
+                slides = document.querySelectorAll('.carousel-slide');
+                dotsContainer.innerHTML = '';
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    if (i === 0) dot.classList.add('active');
+                    dot.onclick = () => goToSlide(i);
+                    dotsContainer.appendChild(dot);
+                });
+
+                setInterval(() => moveCarousel(1), 4000);
+            });
 
         updateCartCount();
+    </script>
+
+    <script>
+        fetch('categories.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(cats => {
+                const grid = document.getElementById('catGridHome');
+                if (grid) {
+                    grid.innerHTML = cats.map(c =>
+                        `<a href="category.html?cat=${c.id}"><img src="${c.image}" alt="${c.label}" /><div class="overlay"><span>${c.label}</span></div></a>`
+                    ).join('');
+                }
+            });
     </script>
 </body>
 </html>

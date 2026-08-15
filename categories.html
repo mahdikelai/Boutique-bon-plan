@@ -46,16 +46,7 @@
         <h2>🌸 تسوقي حسب القسم 🌸</h2>
         <p>اختاري القسم اللي يناسبك</p>
     </div>
-    <div class="cat-grid">
-        <a href="category.html?cat=lingerie"><img src="images/categories/lingerie.png" alt="ملابس داخلية نسائية" /><div class="overlay"><span>👙 ملابس داخلية نسائية</span></div></a>
-        <a href="category.html?cat=ensembles"><img src="images/categories/ensembles.png" alt="أطقم نسائية" /><div class="overlay"><span>🎀 أطقم نسائية</span></div></a>
-        <a href="category.html?cat=bodysuits"><img src="images/categories/bodysuits.png" alt="بودي نسائي" /><div class="overlay"><span>✨ بودي نسائي</span></div></a>
-        <a href="category.html?cat=robes"><img src="images/categories/robes.png" alt="فساتين وملابس نسائية" /><div class="overlay"><span>👗 فساتين وملابس نسائية</span></div></a>
-        <a href="category.html?cat=sleepwear"><img src="images/categories/sleepwear.png" alt="ملابس النوم" /><div class="overlay"><span>🌙 ملابس النوم</span></div></a>
-        <a href="category.html?cat=bridal"><img src="images/categories/bridal.png" alt="تشكيلة العروس" /><div class="overlay"><span>👰🏻‍♀️ تشكيلة العروس</span></div></a>
-        <a href="category.html?cat=shapewear"><img src="images/categories/shapewear.png" alt="ملابس شدّ الجسم" /><div class="overlay"><span>💎 ملابس شدّ الجسم</span></div></a>
-        <a href="category.html?cat=promotions"><img src="images/categories/promotions.png" alt="العروض والتخفيضات" /><div class="overlay"><span>🔥 العروض والتخفيضات</span></div></a>
-    </div>
+    <div class="cat-grid" id="catGrid"></div>
     <a href="category.html?cat=all" class="all-btn">🛍️ عرض كل المنتجات</a>
     <div class="bottom-nav">
         <a href="index.html"><span class="icon">🏠</span><span>الرئيسية</span></a>
@@ -72,6 +63,17 @@
             if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'inline' : 'none'; }
         }
         updateCartCount();
+    </script>
+
+    <script>
+        fetch('categories.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(cats => {
+                const grid = document.getElementById('catGrid');
+                grid.innerHTML = cats.map(c =>
+                    `<a href="category.html?cat=${c.id}"><img src="${c.image}" alt="${c.label}" /><div class="overlay"><span>${c.label}</span></div></a>`
+                ).join('');
+            });
     </script>
 </body>
 </html>

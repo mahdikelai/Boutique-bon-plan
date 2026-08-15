@@ -49,7 +49,7 @@ const products = [
   }
 
   ,{
-    id: 1786799551101, category: "sleepwear",
+    id: 1786799551101, category: "lingerie",
     brand: "Boutique Bon Plan",
     name: "بيستي شورت كيتي ❤️",
     price: 800,

@@ -47,6 +47,9 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('add')">➕ إضافة منتج</button>
             <button class="tab-btn" onclick="showTab('manage')">📦 المنتجات المزادة</button>
+            <button class="tab-btn" onclick="showTab('delivery')">🚚 أسعار التوصيل</button>
+            <button class="tab-btn" onclick="showTab('categories')">📂 الأقسام</button>
+            <button class="tab-btn" onclick="showTab('banners')">🖼️ البانرات</button>
         </div>
 
         <div class="tab-content active" id="tab-add">
@@ -105,6 +108,42 @@
         <div class="tab-content" id="tab-manage">
             <div class="products-list" id="productsList"></div>
         </div>
+
+        <div class="tab-content" id="tab-delivery">
+            <h3 style="margin-bottom:10px;">➕ إضافة ولاية/منطقة جديدة</h3>
+            <input type="text" id="newWilayaName" placeholder="مثلا: 59 - منطقة جديدة" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <div style="display:flex; gap:6px; margin-bottom:6px;">
+                <input type="number" id="newWilayaOffice" placeholder="سعر المكتب" style="flex:1; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+                <input type="number" id="newWilayaHome" placeholder="سعر المنزل" style="flex:1; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            </div>
+            <button onclick="addWilaya()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-bottom:16px;">➕ إضافة</button>
+
+            <h3 style="margin-bottom:10px;">🚚 تعديل أسعار الولايات</h3>
+            <input type="text" id="wilayaSearch" placeholder="🔍 ابحثي عن ولاية..." oninput="filterWilayaList()" style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <div id="deliveryList"></div>
+        </div>
+
+        <div class="tab-content" id="tab-categories">
+            <h3 style="margin-bottom:10px;">➕ إضافة / تعديل قسم</h3>
+            <input type="text" id="catId" placeholder="معرف القسم (بالإنجليزية بلا مسافات، مثلا: shoes)" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <input type="text" id="catLabel" placeholder="الاسم الظاهر (مثلا: 👠 أحذية نسائية)" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <input type="file" id="catImageInput" accept="image/*" style="width:100%; margin-bottom:6px;" />
+            <button onclick="saveCategory()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-bottom:16px;">💾 حفظ القسم</button>
+
+            <h3 style="margin-bottom:10px;">📂 الأقسام الحالية</h3>
+            <div id="categoriesList"></div>
+        </div>
+
+        <div class="tab-content" id="tab-banners">
+            <h3 style="margin-bottom:10px;">➕ إضافة بانر جديد</h3>
+            <input type="file" id="bannerImageInput" accept="image/*" style="width:100%; margin-bottom:6px;" />
+            <input type="text" id="bannerLink" placeholder="الرابط عند الضغط (اختياري، مثلا: category.html?cat=robes)" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <input type="text" id="bannerCaption" placeholder="نص فوق الصورة (اختياري)" style="width:100%; margin-bottom:6px; padding:8px; border-radius:8px; border:1px solid #ddd;" />
+            <button onclick="addBanner()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-bottom:16px;">➕ إضافة البانر</button>
+
+            <h3 style="margin-bottom:10px;">🖼️ البانرات الحالية</h3>
+            <div id="bannersList"></div>
+        </div>
     </div>
 
     <script>
@@ -116,6 +155,294 @@
             document.getElementById('tab-' + tab).classList.add('active');
             event.target.classList.add('active');
             if (tab === 'manage') renderProductsList();
+            if (tab === 'delivery') renderDeliveryList();
+            if (tab === 'categories') renderCategoriesList();
+            if (tab === 'banners') renderBannersList();
+        }
+
+        function renderBannersList() {
+            const list = document.getElementById('bannersList');
+            list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-banners')
+                .then(res => res.json())
+                .then(banners => {
+                    if (!banners.length) {
+                        list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش بانرات حتى الآن</p>';
+                        return;
+                    }
+                    list.innerHTML = '';
+                    banners.forEach(b => {
+                        const item = document.createElement('div');
+                        item.style.cssText = 'display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #eee;';
+                        const preview = b.image
+                            ? `<img src="${b.image}" style="width:60px; height:35px; object-fit:cover; border-radius:6px;" />`
+                            : `<div style="width:60px; height:35px; border-radius:6px; background:linear-gradient(135deg,#e6007e,#d4af37);"></div>`;
+                        item.innerHTML = `
+                            ${preview}
+                            <div style="flex:1; font-size:12px;">${b.caption || '(بلا نص)'}<br><small style="color:#999;">${b.link || 'بلا رابط'}</small></div>
+                            <button onclick="deleteBanner('${b.id}')" style="padding:6px 10px; background:#999; color:white; border:none; border-radius:6px;">🗑️</button>
+                        `;
+                        list.appendChild(item);
+                    });
+                })
+                .catch(() => {
+                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
+        }
+
+        function addBanner() {
+            const fileInput = document.getElementById('bannerImageInput');
+            const link = document.getElementById('bannerLink').value.trim();
+            const caption = document.getElementById('bannerCaption').value.trim();
+
+            if (fileInput.files.length === 0) {
+                alert('عمري، خاصك تختاري صورة للبانر');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fetch('http://localhost:5000/save-banner', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: e.target.result, link: link, caption: caption })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('✅ تم إضافة البانر ونشره');
+                        fileInput.value = '';
+                        document.getElementById('bannerLink').value = '';
+                        document.getElementById('bannerCaption').value = '';
+                        renderBannersList();
+                    } else {
+                        alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                    }
+                })
+                .catch(() => alert('❌ السيرفر غير متصل'));
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+
+        function deleteBanner(id) {
+            if (!confirm('متأكدة تحبي تحذفي هذا البانر؟')) return;
+            fetch('http://localhost:5000/delete-banner', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم الحذف ونشره');
+                    renderBannersList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
+        }
+
+        function renderCategoriesList() {
+            const list = document.getElementById('categoriesList');
+            list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-categories')
+                .then(res => res.json())
+                .then(cats => {
+                    if (!cats.length) {
+                        list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش أقسام حتى الآن</p>';
+                        return;
+                    }
+                    list.innerHTML = '';
+                    cats.forEach(c => {
+                        const item = document.createElement('div');
+                        item.style.cssText = 'display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #eee;';
+                        item.innerHTML = `
+                            <img src="${c.image}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;" />
+                            <div style="flex:1;"><b>${c.label}</b><br><small style="color:#999;">${c.id}</small></div>
+                            <button onclick="editCategory('${c.id}','${c.label}')" style="padding:6px 10px; background:#e6007e; color:white; border:none; border-radius:6px;">✏️</button>
+                            <button onclick="deleteCategory('${c.id}')" style="padding:6px 10px; background:#999; color:white; border:none; border-radius:6px;">🗑️</button>
+                        `;
+                        list.appendChild(item);
+                    });
+                })
+                .catch(() => {
+                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
+        }
+
+        function editCategory(id, label) {
+            document.getElementById('catId').value = id;
+            document.getElementById('catLabel').value = label;
+        }
+
+        function saveCategory() {
+            const id = document.getElementById('catId').value.trim();
+            const label = document.getElementById('catLabel').value.trim();
+            const fileInput = document.getElementById('catImageInput');
+
+            if (!id || !label) {
+                alert('عمري، خاصك تعبي المعرف والاسم');
+                return;
+            }
+
+            function sendData(imageB64) {
+                fetch('http://localhost:5000/save-category', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id, label: label, image: imageB64 })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('✅ تم حفظ القسم ونشره');
+                        document.getElementById('catId').value = '';
+                        document.getElementById('catLabel').value = '';
+                        fileInput.value = '';
+                        renderCategoriesList();
+                    } else {
+                        alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                    }
+                })
+                .catch(() => alert('❌ السيرفر غير متصل'));
+            }
+
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) { sendData(e.target.result); };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                sendData(null);
+            }
+        }
+
+        function deleteCategory(id) {
+            if (!confirm('متأكدة تحبي تحذفي هذا القسم؟')) return;
+            fetch('http://localhost:5000/delete-category', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم الحذف ونشره');
+                    renderCategoriesList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
+        }
+
+        let allWilayas = [];
+
+        function renderDeliveryList() {
+            const list = document.getElementById('deliveryList');
+            list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-delivery-prices')
+                .then(res => res.json())
+                .then(wilayas => {
+                    allWilayas = wilayas;
+                    drawWilayaList(wilayas);
+                })
+                .catch(() => {
+                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
+        }
+
+        function drawWilayaList(wilayas) {
+            const list = document.getElementById('deliveryList');
+            list.innerHTML = '';
+            wilayas.forEach(w => {
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex; align-items:center; gap:6px; padding:8px 0; border-bottom:1px solid #eee;';
+                row.innerHTML = `
+                    <div style="flex:2; font-weight:600; font-size:13px;">${w.name}</div>
+                    <input type="text" value="${w.office}" style="flex:1; width:60px; padding:6px; border-radius:6px; border:1px solid #ddd; text-align:center;" id="office-${w.name}" />
+                    <input type="text" value="${w.home}" style="flex:1; width:60px; padding:6px; border-radius:6px; border:1px solid #ddd; text-align:center;" id="home-${w.name}" />
+                    <button onclick="saveWilayaPrice('${w.name}')" style="padding:6px 10px; background:#e6007e; color:white; border:none; border-radius:6px;">💾</button>
+                    <button onclick="deleteWilaya('${w.name}')" style="padding:6px 10px; background:#999; color:white; border:none; border-radius:6px;">🗑️</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function filterWilayaList() {
+            const query = document.getElementById('wilayaSearch').value.trim();
+            const filtered = allWilayas.filter(w => w.name.includes(query));
+            drawWilayaList(filtered);
+        }
+
+        function saveWilayaPrice(name) {
+            const officeVal = document.getElementById('office-' + name).value.trim();
+            const homeVal = document.getElementById('home-' + name).value.trim();
+            const office = officeVal === '-' ? '-' : parseInt(officeVal);
+            const home = homeVal === '-' ? '-' : parseInt(homeVal);
+
+            fetch('http://localhost:5000/update-delivery-price', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, office: office, home: home })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم تحديث سعر ' + name + ' ونشره');
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
+        }
+
+        function deleteWilaya(name) {
+            if (!confirm('متأكدة تحبي تحذفي ' + name + '؟')) return;
+            fetch('http://localhost:5000/delete-delivery-price', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم الحذف ونشره');
+                    renderDeliveryList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
+        }
+
+        function addWilaya() {
+            const name = document.getElementById('newWilayaName').value.trim();
+            const office = parseInt(document.getElementById('newWilayaOffice').value) || 0;
+            const home = parseInt(document.getElementById('newWilayaHome').value) || 0;
+
+            if (!name) {
+                alert('عمري، خاصك تكتبي اسم الولاية أو المنطقة');
+                return;
+            }
+
+            fetch('http://localhost:5000/update-delivery-price', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, office: office, home: home, isNew: true })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم إضافة ' + name + ' ونشره');
+                    document.getElementById('newWilayaName').value = '';
+                    document.getElementById('newWilayaOffice').value = '';
+                    document.getElementById('newWilayaHome').value = '';
+                    renderDeliveryList();
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
         }
 
         function handleFiles(event) {
@@ -192,32 +519,61 @@
             setTimeout(() => document.getElementById('successMsg').classList.remove('show'), 4000);
         }
 
+        let allCategoriesForDropdown = [];
+
         function renderProductsList() {
             const list = document.getElementById('productsList');
             list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
-            fetch('http://localhost:5000/get-products')
-                .then(res => res.json())
-                .then(products => {
-                    if (!products.length) {
-                        list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش منتجات حتى الآن</p>';
-                        return;
-                    }
-                    list.innerHTML = '<h3>📦 كل المنتجات (' + products.length + ')</h3>';
-                    products.forEach(p => {
-                        const item = document.createElement('div');
-                        item.className = 'prod-item';
-                        const img = (p.images ? p.images[0] : p.img) || '';
-                        item.innerHTML = `
-                            <img src="${img}" />
-                            <div class="info"><b>${p.name}</b>${p.price} دج</div>
-                            <button onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-                        `;
-                        list.appendChild(item);
-                    });
-                })
-                .catch(() => {
-                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+
+            Promise.all([
+                fetch('http://localhost:5000/get-products').then(res => res.json()),
+                fetch('categories.json?t=' + Date.now()).then(res => res.json())
+            ])
+            .then(([products, categories]) => {
+                allCategoriesForDropdown = categories;
+                if (!products.length) {
+                    list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش منتجات حتى الآن</p>';
+                    return;
+                }
+                list.innerHTML = '<h3>📦 كل المنتجات (' + products.length + ')</h3>';
+                products.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'prod-item';
+                    const img = (p.images ? p.images[0] : p.img) || '';
+                    const options = categories.map(c =>
+                        `<option value="${c.id}" ${c.id === p.category ? 'selected' : ''}>${c.label}</option>`
+                    ).join('');
+                    item.innerHTML = `
+                        <img src="${img}" />
+                        <div class="info"><b>${p.name}</b>${p.price} دج</div>
+                        <select id="cat-${p.id}" style="padding:4px; border-radius:6px; border:1px solid #ddd; font-size:12px;">${options}</select>
+                        <button onclick="changeCategory(${p.id})">💾</button>
+                        <button onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+                    `;
+                    list.appendChild(item);
                 });
+            })
+            .catch(() => {
+                list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+            });
+        }
+
+        function changeCategory(id) {
+            const newCat = document.getElementById('cat-' + id).value;
+            fetch('http://localhost:5000/update-product-category', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, category: newCat })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم تغيير الفئة ونشرها');
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
         }
 
         function deleteProduct(id) {

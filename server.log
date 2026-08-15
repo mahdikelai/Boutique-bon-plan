@@ -5,6 +5,5 @@
  * Running on http://127.0.0.1:5000
  * Running on http://100.126.91.49:5000
 [33mPress CTRL+C to quit[0m
-127.0.0.1 - - [15/Aug/2026 17:12:08] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [15/Aug/2026 17:12:15] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [15/Aug/2026 17:12:34] "OPTIONS /delete-product HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:56:04] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:56:24] "OPTIONS /update-product-category HTTP/1.1" 200 -

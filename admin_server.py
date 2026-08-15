@@ -137,5 +137,285 @@ def get_products():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+DELIVERY_FILE = os.path.join(BASE_DIR, "delivery-prices.json")
+
+@app.route('/get-delivery-prices', methods=['GET'])
+def get_delivery_prices():
+    try:
+        with open(DELIVERY_FILE, encoding='utf-8') as f:
+            return jsonify(json.load(f))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/update-delivery-price', methods=['POST'])
+def update_delivery_price():
+    try:
+        data = request.get_json()
+        wilaya_name = data.get('name')
+        office = data.get('office')
+        home = data.get('home')
+
+        with open(DELIVERY_FILE, encoding='utf-8') as f:
+            wilayas = json.load(f)
+
+        found = False
+        for w in wilayas:
+            if w['name'] == wilaya_name:
+                w['office'] = office
+                w['home'] = home
+                found = True
+                break
+
+        if not found:
+            if data.get('isNew'):
+                wilayas.append({"name": wilaya_name, "office": office, "home": home})
+            else:
+                return jsonify({"error": "ماتلقاتش الولاية"}), 404
+
+        with open(DELIVERY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(wilayas, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'تحديث سعر التوصيل: {wilaya_name}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/delete-delivery-price', methods=['POST'])
+def delete_delivery_price():
+    try:
+        data = request.get_json()
+        wilaya_name = data.get('name')
+
+        with open(DELIVERY_FILE, encoding='utf-8') as f:
+            wilayas = json.load(f)
+
+        new_wilayas = [w for w in wilayas if w['name'] != wilaya_name]
+        if len(new_wilayas) == len(wilayas):
+            return jsonify({"error": "ماتلقاتش الولاية"}), 404
+
+        with open(DELIVERY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(new_wilayas, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'حذف: {wilaya_name}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+CATEGORIES_FILE = os.path.join(BASE_DIR, "categories.json")
+
+@app.route('/get-categories', methods=['GET'])
+def get_categories():
+    try:
+        with open(CATEGORIES_FILE, encoding='utf-8') as f:
+            return jsonify(json.load(f))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/save-category', methods=['POST'])
+def save_category():
+    try:
+        data = request.get_json()
+        cat_id = data.get('id', '').strip()
+        label = data.get('label', '').strip()
+        image_b64 = data.get('image')
+
+        if not cat_id or not label:
+            return jsonify({"error": "بيانات ناقصة"}), 400
+
+        with open(CATEGORIES_FILE, encoding='utf-8') as f:
+            categories = json.load(f)
+
+        image_path = None
+        if image_b64:
+            header, encoded = image_b64.split(',', 1) if ',' in image_b64 else ('', image_b64)
+            ext = 'png'
+            if 'jpeg' in header or 'jpg' in header:
+                ext = 'jpg'
+            elif 'webp' in header:
+                ext = 'webp'
+            image_path = f"images/categories/{cat_id}.{ext}"
+            full_path = os.path.join(BASE_DIR, image_path)
+            with open(full_path, 'wb') as f:
+                f.write(base64.b64decode(encoded))
+
+        existing = next((c for c in categories if c['id'] == cat_id), None)
+        if existing:
+            existing['label'] = label
+            if image_path:
+                existing['image'] = image_path
+        else:
+            categories.append({
+                "id": cat_id,
+                "label": label,
+                "image": image_path or f"images/categories/{cat_id}.png"
+            })
+
+        with open(CATEGORIES_FILE, 'w', encoding='utf-8') as f:
+            json.dump(categories, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'تحديث قسم: {label}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/delete-category', methods=['POST'])
+def delete_category():
+    try:
+        data = request.get_json()
+        cat_id = data.get('id')
+
+        with open(CATEGORIES_FILE, encoding='utf-8') as f:
+            categories = json.load(f)
+
+        new_categories = [c for c in categories if c['id'] != cat_id]
+        if len(new_categories) == len(categories):
+            return jsonify({"error": "ماتلقاش القسم"}), 404
+
+        with open(CATEGORIES_FILE, 'w', encoding='utf-8') as f:
+            json.dump(new_categories, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'حذف قسم: {cat_id}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+BANNERS_FILE = os.path.join(BASE_DIR, "banners.json")
+
+@app.route('/get-banners', methods=['GET'])
+def get_banners():
+    try:
+        with open(BANNERS_FILE, encoding='utf-8') as f:
+            return jsonify(json.load(f))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/save-banner', methods=['POST'])
+def save_banner():
+    try:
+        data = request.get_json()
+        banner_id = data.get('id') or f"b{int(datetime.now().timestamp())}"
+        link = data.get('link') or None
+        caption = data.get('caption') or None
+        image_b64 = data.get('image')
+
+        with open(BANNERS_FILE, encoding='utf-8') as f:
+            banners = json.load(f)
+
+        image_path = None
+        if image_b64:
+            header, encoded = image_b64.split(',', 1) if ',' in image_b64 else ('', image_b64)
+            ext = 'jpg'
+            if 'png' in header:
+                ext = 'png'
+            elif 'webp' in header:
+                ext = 'webp'
+            image_path = f"images/banners/{banner_id}.{ext}"
+            full_path = os.path.join(BASE_DIR, image_path)
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            with open(full_path, 'wb') as f:
+                f.write(base64.b64decode(encoded))
+
+        existing = next((b for b in banners if b['id'] == banner_id), None)
+        if existing:
+            existing['link'] = link
+            existing['caption'] = caption
+            if image_path:
+                existing['image'] = image_path
+                existing['gradient'] = None
+        else:
+            banners.append({
+                "id": banner_id,
+                "image": image_path,
+                "gradient": None if image_path else "linear-gradient(135deg, #e6007e, #d4af37)",
+                "link": link,
+                "caption": caption
+            })
+
+        with open(BANNERS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(banners, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'تحديث بانر: {banner_id}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/delete-banner', methods=['POST'])
+def delete_banner():
+    try:
+        data = request.get_json()
+        banner_id = data.get('id')
+
+        with open(BANNERS_FILE, encoding='utf-8') as f:
+            banners = json.load(f)
+
+        new_banners = [b for b in banners if b['id'] != banner_id]
+        if len(new_banners) == len(banners):
+            return jsonify({"error": "ماتلقاش البانر"}), 404
+
+        with open(BANNERS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(new_banners, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'حذف بانر: {banner_id}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/update-product-category', methods=['POST'])
+def update_product_category():
+    try:
+        data = request.get_json()
+        product_id = data.get('id')
+        new_category = data.get('category', '').strip()
+
+        if not product_id or not new_category:
+            return jsonify({"error": "بيانات ناقصة"}), 400
+
+        with open(PRODUCTS_FILE, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        pattern = re.compile(
+            r'(id:\s*' + str(product_id) + r',\s*category:\s*")[^"]*(")'
+        )
+        new_content, count = pattern.subn(r'\g<1>' + new_category + r'\g<2>', content, count=1)
+
+        if count == 0:
+            return jsonify({"error": "ماتلقاش المنتج"}), 404
+
+        with open(PRODUCTS_FILE, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'تغيير فئة منتج: {product_id}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "b1",
+    "image": null,
+    "gradient": "linear-gradient(135deg, #e6007e, #d4af37)",
+    "link": null,
+    "caption": "🎉 تخفيضات لحد 50%"
+  },
+  {
+    "id": "b2",
+    "image": "images/banners/pack-banner.png",
+    "gradient": null,
+    "link": "category.html?cat=packs",
+    "caption": "🎁 عروض الباك"
+  },
+  {
+    "id": "b3",
+    "image": "images/banners/delivery-banner-57.png",
+    "gradient": null,
+    "link": "delivery-prices.html",
+    "caption": null
+  }
+]
