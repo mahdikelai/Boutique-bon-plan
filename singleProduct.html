@@ -368,7 +368,7 @@
                     stockEl.style.display = 'block';
                 }
 
-                startSocialProof(product.name);
+                startSocialProof(product.name, product.id);
 
                 fetch('reviews.json?t=' + Date.now())
                     .then(res => res.json())
@@ -505,24 +505,44 @@
 
         updateCartCount();
 
-        function startSocialProof(productName) {
+        function startSocialProof(productName, productId) {
             const names = ['سارة', 'أمينة', 'خديجة', 'إيمان', 'نور الهدى', 'مريم', 'ياسمين', 'فاطمة الزهراء', 'حنان', 'وردة'];
-            const cities = ['الجزائر', 'وهران', 'قسنطينة', 'سطيف', 'بجاية', 'تلمسان', 'البليدة', 'عنابة'];
+            const cities = ['الجزائر', 'وهران', 'قسنطينة', 'سطيف', 'بجاية', 'تلمسان', 'البليدة', 'سكيكدة', 'عنابة', 'المدية'];
             const box = document.getElementById('socialProof');
             const text = document.getElementById('socialProofText');
             if (!box || !text) return;
 
+            // عشوائية ثابتة حسب رقم المنتج (نفس الطلبات تبان لكل الزوار، ماشي عشوائية فكل مرة)
+            let seed = Number(productId) || 1;
+            function seededRandom() {
+                seed = (seed * 9301 + 49297) % 233280;
+                return seed / 233280;
+            }
+
+            const orderCount = 2 + Math.floor(seededRandom() * 2); // 2 أو 3
+            const orders = [];
+            let hoursAgo = 2 + Math.floor(seededRandom() * 5); // أول طلب بين 2 و6 سا
+            for (let i = 0; i < orderCount; i++) {
+                orders.push({
+                    name: names[Math.floor(seededRandom() * names.length)],
+                    city: cities[Math.floor(seededRandom() * cities.length)],
+                    hoursAgo: Math.min(hoursAgo, 23)
+                });
+                hoursAgo += 2 + Math.floor(seededRandom() * 5); // فرق أكثر من ساعتين للطلب اللي بعدو
+            }
+
+            let idx = 0;
             function showOne() {
-                const name = names[Math.floor(Math.random() * names.length)];
-                const city = cities[Math.floor(Math.random() * cities.length)];
-                const minutesAgo = Math.floor(Math.random() * 20) + 1;
-                text.innerHTML = '<b>' + name + '</b> من ' + city + ' طلبت هذا المنتج منذ ' + minutesAgo + ' دقيقة';
+                const o = orders[idx % orders.length];
+                const unit = o.hoursAgo === 1 ? 'ساعة' : (o.hoursAgo <= 10 ? 'ساعات' : 'ساعة');
+                text.innerHTML = '<b>' + o.name + '</b> من ' + o.city + ' طلبت هذا المنتج منذ ' + o.hoursAgo + ' ' + unit;
                 box.style.transform = 'translateY(0)';
-                setTimeout(() => { box.style.transform = 'translateY(120%)'; }, 4500);
+                setTimeout(() => { box.style.transform = 'translateY(120%)'; }, 5000);
+                idx++;
             }
 
             setTimeout(showOne, 3000);
-            setInterval(showOne, 14000);
+            setInterval(showOne, 65000 + Math.floor(seededRandom() * 30000));
         }
 
     </script>
