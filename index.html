@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Bon Plan</title>
+    <style>
+        :root {
+            --pink: #e6007e;
+            --pink-soft: #fdeef3;
+            --gold: #d4af37;
+            --black: #1a1a1a;
+            --bg: #ffffff;
+            --wa-green: #25D366;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--bg); color: var(--black); padding-bottom: 90px; }
+
+        .marquee {
+            background: linear-gradient(90deg, var(--pink), var(--gold));
+            color: white;
+            padding: 4px 0;
+            font-weight: 700;
+            font-size: 11px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: scrollMarquee 20s linear infinite;
+        }
+        .marquee-track span {
+            white-space: nowrap;
+            padding-left: 40px;
+        }
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .header { background: white; padding: 10px 16px 8px; text-align: center; border-bottom: 2px solid var(--pink-soft); display: flex; align-items: center; gap: 12px; justify-content: center; }
+        .header .logo { max-width: 55px; height: 55px; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 0 0 2px var(--black); }
+        .header .header-text { text-align: right; }
+        .header h1 { font-size: 20px; font-weight: 800; color: var(--pink); letter-spacing: 0.5px; }
+        .header .sub { font-size: 12px; color: var(--gold); margin-top: 0px; font-weight: 600; }
+
+        .search-bar { padding: 6px 16px; background: white; border-bottom: 1px solid var(--pink-soft); }
+        .search-bar input { width: 100%; padding: 7px 16px; border-radius: 50px; border: 2px solid var(--pink-soft); background: var(--pink-soft); font-size: 13px; outline: none; transition: 0.2s; }
+        .search-bar input:focus { border-color: var(--pink); background: white; }
+
+        /* الكاروسيل */
+        .carousel { position: relative; width: 100%; overflow: hidden; background: var(--pink-soft); }
+        .carousel-track { display: flex; transition: transform 0.5s ease; }
+        .carousel-slide { min-width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .carousel-slide .caption { position: absolute; bottom: 16px; right: 16px; background: rgba(26,26,26,0.75); color: white; padding: 8px 18px; border-radius: 30px; font-weight: 700; font-size: 14px; }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: none; width: 36px; height: 36px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-size: 18px; color: var(--pink); cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+        .carousel-arrow.prev { left: 10px; }
+        .carousel-arrow.next { right: 10px; }
+        .carousel-dots { display: flex; justify-content: center; gap: 4px; padding: 2px 0; background: white; }
+        .carousel-dots span { width: 8px; height: 8px; border-radius: 50%; background: #ddd; cursor: pointer; }
+        .carousel-dots span.active { background: var(--pink); }
+
+        /* شبكة الأقسام 3 أعمدة */
+        .cat-grid-section { padding: 4px 16px 4px; background: white; }
+        .cat-grid-section h2 { font-size: 15px; color: var(--pink); font-weight: 800; margin-bottom: 6px; }
+        .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .cat-grid a { position: relative; display: block; border-radius: 14px; overflow: hidden; aspect-ratio: 1 / 1; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+        .cat-grid a img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+        .cat-grid a .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,26,26,0.8), transparent 55%); display: flex; align-items: flex-end; padding: 8px; }
+        .cat-grid a .overlay span { color: white; font-weight: 800; font-size: 13px; }
+
+        .sidebar { background: white; padding: 20px 16px 10px; border-bottom: 1px solid var(--pink-soft); }
+        .sidebar h2 { font-size: 18px; color: var(--pink); margin-bottom: 10px; font-weight: 700; }
+        .sidebar .categories { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sidebar .categories a { background: var(--pink-soft); padding: 8px 18px; border-radius: 40px; font-size: 14px; font-weight: 600; color: #333; text-decoration: none; transition: 0.2s; border: 2px solid transparent; }
+        .sidebar .categories a:hover { background: var(--pink); color: white; border-color: var(--pink); transform: scale(1.03); }
+        .sidebar .categories a.active { background: var(--pink); color: white; border-color: var(--gold); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding: 20px; }
+        .product-card { background: white; border-radius: 24px; padding: 14px 12px 18px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: 0.3s; text-decoration: none; color: inherit; border: 1px solid var(--pink-soft); }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(212,20,90,0.15); border-color: var(--gold); }
+        .product-card img { max-width: 100%; height: 150px; object-fit: cover; border-radius: 18px; margin-bottom: 8px; }
+        .product-card h3 { font-size: 16px; font-weight: 700; margin: 6px 0 2px; }
+        .product-card .price { color: var(--pink); font-weight: 800; font-size: 19px; }
+        .no-products { text-align: center; padding: 40px; color: #888; font-size: 20px; grid-column: 1 / -1; }
+
+        /* Bottom nav ثابت */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: flex-end; padding: 4px 4px 4px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 200; }
+        .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 9px; font-weight: 700; gap: 1px; position: relative; flex: 1; }
+        .bottom-nav a .icon { font-size: 16px; }
+        .bottom-nav a.active { color: var(--pink); }
+        .bottom-nav a .badge { position: absolute; top: -4px; right: 18px; background: var(--pink); color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; font-weight: 700; display: none; }
+        .bottom-nav a.whatsapp-btn { margin-top: -14px; }
+        .bottom-nav a.whatsapp-btn .icon-circle { background: var(--wa-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 14px rgba(37,211,102,0.5); border: 4px solid white; }
+        .bottom-nav a.whatsapp-btn span:last-child { color: var(--wa-green); margin-top: 2px; }
+
+        @media (max-width: 600px) {
+            .header .logo { max-width: 110px; }
+            .header h1 { font-size: 22px; }
+            .sidebar .categories a { font-size: 12px; padding: 6px 14px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; padding: 14px; }
+            .carousel-slide { height: 115px; }
+        }
+    
+        .view-all-btn { display: block; margin: 18px 16px 24px; background: linear-gradient(90deg, var(--pink), var(--gold)); color: white; text-align: center; padding: 16px; border-radius: 50px; font-size: 17px; font-weight: 800; text-decoration: none; box-shadow: 0 6px 18px rgba(212,20,90,0.3); }
+    </style>
+    <script src="custom-products.js"></script>
+</head>
+<body>
+    <div class="marquee"><div class="marquee-track"><span>🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span><span>🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span></div></div>
+
+    <div class="header">
+        <img src="images/logo.png" alt="Boutique Bon Plan" class="logo" />
+        <div class="header-text">
+            <h1>Boutique Bon Plan</h1>
+            <div class="sub">👗 أناقة • راحة • تميّز</div>
+        </div>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 ابحثي عن منتج..." onkeyup="filterProducts()" />
+    </div>
+
+    <!-- الكاروسيل -->
+    <div class="carousel">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide" style="background: linear-gradient(135deg, #e6007e, #d4af37);">
+                <div class="caption">🎉 تخفيضات لحد 50%</div>
+            </div>
+            <a href="category.html?cat=packs" class="carousel-slide" style="background-image: url('images/banners/pack-banner.png'); background-size: cover; background-position: center; position: relative; text-decoration: none;">
+                <div style="position: absolute; right: 6%; top: 50%; transform: translateY(-50%); text-align: center;">
+                    <div style="background: rgba(230,0,126,0.92); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 13px; margin-bottom: 4px; white-space: nowrap;">🎁 عروض الباك</div>
+                    <div style="background: rgba(26,26,26,0.85); color: #d4af37; padding: 4px 14px; border-radius: 20px; font-weight: 800; font-size: 11px; white-space: nowrap;">بأسعار ممتازة</div>
+                </div>
+            </a>
+            <a href="delivery-prices.html" class="carousel-slide" style="background-image: url('images/banners/delivery-banner-57.png'); background-size: cover; background-position: center; text-decoration: none; display: block;">
+            
+            </a>
+        </div>
+        <button class="carousel-arrow prev" onclick="moveCarousel(-1)">‹</button>
+        <button class="carousel-arrow next" onclick="moveCarousel(1)">›</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <!-- شبكة الأقسام 3 أعمدة -->
+    <div class="cat-grid-section">
+        <h2>📌 تسوقي حسب القسم</h2>
+        <div class="cat-grid">
+            <a href="category.html?cat=lingerie">
+                <img src="images/categories/lingerie.png" alt="👙 ملابس داخلية نسائية" />
+                <div class="overlay"><span>👙 ملابس داخلية نسائية</span></div>
+            </a>
+            <a href="category.html?cat=ensembles">
+                <img src="images/categories/ensembles.png" alt="🎀 أطقم نسائية" />
+                <div class="overlay"><span>🎀 أطقم نسائية</span></div>
+            </a>
+            <a href="category.html?cat=bodysuits">
+                <img src="images/categories/bodysuits.png" alt="✨ بودي نسائي" />
+                <div class="overlay"><span>✨ بودي نسائي</span></div>
+            </a>
+            <a href="category.html?cat=robes">
+                <img src="images/categories/robes.png" alt="👗 فساتين وملابس نسائية" />
+                <div class="overlay"><span>👗 فساتين وملابس نسائية</span></div>
+            </a>
+            <a href="category.html?cat=sleepwear">
+                <img src="images/categories/sleepwear.png" alt="🌙 ملابس النوم" />
+                <div class="overlay"><span>🌙 ملابس النوم</span></div>
+            </a>
+            <a href="category.html?cat=bridal">
+                <img src="images/categories/bridal.png" alt="👰🏻‍♀️ تشكيلة العروس" />
+                <div class="overlay"><span>👰🏻‍♀️ تشكيلة العروس</span></div>
+            </a>
+            <a href="category.html?cat=shapewear">
+                <img src="images/categories/shapewear.png" alt="💎 ملابس شدّ الجسم" />
+                <div class="overlay"><span>💎 ملابس شدّ الجسم</span></div>
+            </a>
+            <a href="category.html?cat=promotions">
+                <img src="images/categories/promotions.png" alt="🔥 العروض والتخفيضات" />
+                <div class="overlay"><span>🔥 العروض والتخفيضات</span></div>
+            </a>
+            <a href="category.html?cat=all" style="background: linear-gradient(135deg, var(--pink) 0%, var(--gold) 55%, var(--black) 100%); display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; font-weight: 800; font-size: 14px; text-align: center; padding: 8px;">🛍️ عرض كل المنتجات</span>
+            </a>
+        </div>
+    </div>
+<!-- Bottom Nav ثابت -->
+    <div class="bottom-nav">
+        <a href="index.html" class="active"><span class="icon">🏠</span><span>الرئيسية</span></a>
+        <a href="categories.html"><span class="icon">📂</span><span>الأقسام</span></a>
+        <a href="https://wa.me/213XXXXXXXX" target="_blank" class="whatsapp-btn">
+            <span class="icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="34" height="34" fill="white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.362.686 4.564 1.872 6.418L4 29l7.793-1.837A11.94 11.94 0 0016.001 27C22.63 27 28 21.627 28 15S22.63 3 16.001 3zm6.583 16.943c-.28.786-1.634 1.5-2.257 1.588-.6.086-1.312.122-2.117-.132-.487-.152-1.113-.36-1.918-.706-3.378-1.458-5.585-4.86-5.756-5.088-.17-.228-1.374-1.824-1.374-3.48s.86-2.47 1.166-2.808c.306-.34.667-.424.89-.424.223 0 .446.002.64.012.206.01.482-.078.754.575.28.672.952 2.328 1.036 2.498.084.17.14.37.028.598-.11.228-.166.37-.328.57-.166.2-.348.446-.496.6-.166.17-.34.354-.146.696.194.34.862 1.42 1.85 2.3 1.27 1.132 2.34 1.482 2.68 1.65.34.17.538.142.736-.086.198-.228.848-.988 1.074-1.328.226-.34.452-.284.762-.17.31.114 1.966.928 2.304 1.096.338.17.564.254.648.396.084.142.084.822-.196 1.608z"/></svg></span>
+            <span>واتساب</span>
+        </a>
+        <a href="#search" onclick="document.getElementById('searchInput').focus()"><span class="icon">🔍</span><span>بحث</span></a>
+        <a href="cart.html"><span class="icon">🛒</span><span>السلة</span><span class="badge" id="cartCountTop">0</span></a>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeCategory = urlParams.get('cat') || 'all';
+        document.querySelectorAll('.categories a').forEach(link => {
+            link.classList.remove('active');
+            const linkCat = link.getAttribute('href').split('=')[1] || 'all';
+            if (linkCat === activeCategory) link.classList.add('active');
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cartCountTop');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'inline' : 'none'; }
+        }
+
+        loadAllProducts()
+            .then(allProducts => {
+                const grid = document.getElementById('productGrid');
+                grid.innerHTML = '';
+                let filtered = allProducts;
+                if (activeCategory !== 'all') filtered = allProducts.filter(p => p.category === activeCategory);
+                if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">😕 لا توجد منتجات في هذا القسم حالياً</div>'; return; }
+                filtered.forEach(p => {
+                    const imgSrc = p.images ? p.images[0] : p.img;
+                    const card = document.createElement('a');
+                    card.className = 'product-card';
+                    card.href = 'singleProduct.html?id=' + p.id;
+                    card.innerHTML = `<img src="${imgSrc}" alt="${p.name}" /><h3>${p.name}</h3><div class="price">${p.price} دج</div>`;
+                    grid.appendChild(card);
+                });
+            })
+            .catch(() => { document.getElementById('productGrid').innerHTML = '<div class="no-products">لا توجد منتجات حالياً</div>'; });
+
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = name.includes(query) ? '' : 'none';
+            });
+        }
+
+        let currentSlide = 0;
+        const track = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carouselDots');
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        });
+        function updateCarousel() {
+            track.style.transform = `translateX(${currentSlide * 100}%)`;
+            document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+        }
+        function moveCarousel(dir) {
+            currentSlide = (currentSlide + dir + slides.length) % slides.length;
+            updateCarousel();
+        }
+        function goToSlide(i) { currentSlide = i; updateCarousel(); }
+        setInterval(() => moveCarousel(1), 4000);
+
+        updateCartCount();
+    </script>
+</body>
+</html>

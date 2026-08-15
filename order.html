@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Bon Plan - إتمام الطلب</title>
+    <style>
+        :root { --pink: #e6007e; --pink-soft: #fdeef3; --gold: #d4af37; --black: #1a1a1a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-text-size-adjust: 100%; }
+        body { background: #fff; color: var(--black); padding-bottom: 40px; }
+        .header { background: linear-gradient(90deg, var(--pink), var(--gold)); color: white; padding: 14px 16px; text-align: center; display: flex; align-items: center; justify-content: space-between; }
+        .header .back { text-decoration: none; color: white; font-size: 20px; font-weight: 700; }
+        .header h1 { font-size: 16px; font-weight: 800; flex: 1; }
+        .product-summary { display: flex; align-items: center; gap: 12px; background: var(--pink-soft); margin: 14px 16px; padding: 12px; border-radius: 14px; }
+        .product-summary img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; }
+        .product-summary .info b { display: block; font-size: 14px; }
+        .product-summary .info span { color: var(--pink); font-weight: 800; font-size: 15px; }
+        .form-section { padding: 0 16px; }
+        label { display: block; font-size: 13px; font-weight: 700; margin: 14px 0 6px; }
+        input, select, textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--pink-soft); font-size: 14px; background: white; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--pink); }
+        textarea { resize: vertical; min-height: 60px; }
+        .delivery-options { display: flex; gap: 10px; margin-top: 6px; }
+        .delivery-options label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--pink-soft); padding: 12px; border-radius: 12px; font-weight: 700; font-size: 13px; margin: 0; cursor: pointer; border: 2px solid transparent; }
+        .delivery-options input[type="radio"] { width: auto; accent-color: var(--pink); }
+        .delivery-options label.active { border-color: var(--pink); background: #ffe0ec; }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, var(--pink), var(--gold)); color: white; border: none; padding: 16px; border-radius: 40px; font-size: 16px; font-weight: 800; margin-top: 24px; cursor: pointer; }
+        .price-link { text-align: center; display: block; margin-top: 10px; font-size: 12px; color: var(--pink); text-decoration: none; font-weight: 700; }
+        .error-msg { color: #dc2626; font-size: 12px; margin-top: 4px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="javascript:history.back()" class="back">→</a>
+        <h1>🛍️ إتمام الطلب</h1>
+        <span style="width:20px"></span>
+    </div>
+
+    <div class="product-summary" id="productSummary">
+        <img id="prodImg" src="" alt="" />
+        <div class="info">
+            <b id="prodName">جاري التحميل...</b>
+            <span id="prodPrice"></span>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <label>الاسم واللقب *</label>
+        <input type="text" id="fullName" placeholder="مثلا: فاطمة بن علي" />
+
+        <label>رقم الهاتف *</label>
+        <input type="tel" id="phone" placeholder="0555 12 34 56" />
+
+        <label>الولاية *</label>
+        <select id="wilaya">
+            <option value="">اختاري الولاية</option>
+            <option>01 - أدرار</option><option>02 - الشلف</option><option>03 - الأغواط</option>
+            <option>04 - أم البواقي</option><option>05 - باتنة</option><option>06 - بجاية</option>
+            <option>07 - بسكرة</option><option>08 - بشار</option><option>09 - البليدة</option>
+            <option>10 - البويرة</option><option>11 - تمنراست</option><option>12 - تبسة</option>
+            <option>13 - تلمسان</option><option>14 - تيارت</option><option>15 - تيزي وزو</option>
+            <option>16 - الجزائر العاصمة</option><option>17 - الجلفة</option><option>18 - جيجل</option>
+            <option>19 - سطيف</option><option>20 - سعيدة</option><option>21 - سكيكدة</option>
+            <option>22 - سيدي بلعباس</option><option>23 - عنابة</option><option>24 - قالمة</option>
+            <option>25 - قسنطينة</option><option>26 - المدية</option><option>27 - مستغانم</option>
+            <option>28 - المسيلة</option><option>29 - معسكر</option><option>30 - ورقلة</option>
+            <option>31 - وهران</option><option>32 - البيض</option><option>33 - إليزي</option>
+            <option>34 - برج بوعريريج</option><option>35 - بومرداس</option><option>36 - الطارف</option>
+            <option>37 - تندوف</option><option>38 - تيسمسيلت</option><option>39 - الوادي</option>
+            <option>40 - خنشلة</option><option>41 - سوق أهراس</option><option>42 - تيبازة</option>
+            <option>43 - ميلة</option><option>44 - عين الدفلى</option><option>45 - النعامة</option>
+            <option>46 - عين تموشنت</option><option>47 - غرداية</option><option>48 - غليزان</option>
+            <option>49 - تيميمون</option><option>50 - برج باجي مختار</option><option>51 - أولاد جلال</option>
+            <option>52 - بني عباس</option><option>53 - إن صالح</option><option>54 - إن قزام</option>
+            <option>55 - تقرت</option><option>56 - جانت</option><option>57 - المغير</option>
+            <option>58 - المنيعة</option>
+        </select>
+
+        <label>البلدية *</label>
+        <input type="text" id="commune" placeholder="اسم البلدية" />
+
+        <label>العنوان بالتفصيل</label>
+        <textarea id="address" placeholder="الحي، الشارع، رقم المنزل... (اختياري إذا اخترتي التوصيل للمكتب)"></textarea>
+
+        <label>طريقة التوصيل *</label>
+        <div class="delivery-options">
+            <label id="labelOffice"><input type="radio" name="delivery" value="مكتب التوصيل" onchange="updateDeliveryUI()" /> 🏢 مكتب التوصيل</label>
+            <label id="labelHome"><input type="radio" name="delivery" value="باب المنزل" onchange="updateDeliveryUI()" /> 🏠 باب المنزل</label>
+        </div>
+        <a href="delivery-prices.html" class="price-link">🚚 شوفي أسعار التوصيل لولايتك</a>
+
+        <div class="error-msg" id="errorMsg">⚠️ خاصك تعبي كل الخانات المطلوبة (*)</div>
+
+        <button class="submit-btn" onclick="submitOrder()">✅ تأكيد الطلب عبر واتساب</button>
+    </div>
+
+    <script src="custom-products.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+        let currentProduct = null;
+
+        loadAllProducts().then(products => {
+            currentProduct = products.find(p => p.id === productId);
+            if (currentProduct) {
+                const imgSrc = currentProduct.images ? currentProduct.images[0] : currentProduct.img;
+                document.getElementById('prodImg').src = imgSrc;
+                document.getElementById('prodName').textContent = currentProduct.name;
+                document.getElementById('prodPrice').textContent = currentProduct.price + ' دج';
+            } else {
+                document.getElementById('prodName').textContent = 'منتج غير محدد';
+            }
+        });
+
+        function updateDeliveryUI() {
+            document.querySelectorAll('.delivery-options label').forEach(l => l.classList.remove('active'));
+            const checked = document.querySelector('input[name="delivery"]:checked');
+            if (checked) checked.closest('label').classList.add('active');
+        }
+
+        function submitOrder() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const wilaya = document.getElementById('wilaya').value;
+            const commune = document.getElementById('commune').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const delivery = document.querySelector('input[name="delivery"]:checked');
+
+            if (!fullName || !phone || !wilaya || !commune || !delivery) {
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+            document.getElementById('errorMsg').style.display = 'none';
+
+            const productName = currentProduct ? currentProduct.name : 'غير محدد';
+            const productPrice = currentProduct ? currentProduct.price + ' دج' : '';
+
+            let message = `🛍️ *طلب جديد*\n\n`;
+            message += `📦 المنتج: ${productName}\n`;
+            message += `💰 السعر: ${productPrice}\n\n`;
+            message += `👤 الاسم: ${fullName}\n`;
+            message += `📞 الهاتف: ${phone}\n`;
+            message += `📍 الولاية: ${wilaya}\n`;
+            message += `🏘️ البلدية: ${commune}\n`;
+            if (address) message += `🏠 العنوان: ${address}\n`;
+            message += `🚚 التوصيل: ${delivery.value}`;
+
+            const waLink = 'https://wa.me/213XXXXXXXX?text=' + encodeURIComponent(message);
+            window.location.href = waLink;
+        }
+    </script>
+</body>
+</html>

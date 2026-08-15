@@ -1,0 +1,91 @@
+/* toast.css — shared by login and register pages */
+
+/* ============================================================
+   TOAST CONTAINER
+   Fixed to the top-right corner, above everything else.
+   Each toast stacks below the previous one automatically.
+   ============================================================ */
+#toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none; /* clicks pass through the empty container */
+}
+
+/* ============================================================
+   INDIVIDUAL TOAST
+   Starts invisible + shifted right, slides in when .show is added.
+   ============================================================ */
+.toast {
+  min-width: 260px;
+  max-width: 380px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.4;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  pointer-events: auto;
+
+  /* start position: invisible + slid off to the right */
+  opacity: 0;
+  transform: translateX(110%);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* When JS adds .show, it animates in */
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================================
+   TOAST TYPES
+   ============================================================ */
+
+/* Green for success ("Welcome back!", "Account created") */
+.toast-success {
+  background-color: #088178;
+  border-left: 4px solid #055f5a;
+}
+
+/* Red for errors ("Something went wrong") */
+.toast-error {
+  background-color: #dc3545;
+  border-left: 4px solid #a71d2a;
+}
+
+/* Optional: info style (blue) — not used yet but handy to have */
+.toast-info {
+  background-color: #0891b2;
+  border-left: 4px solid #0369a1;
+}
+
+/* ============================================================
+   MOBILE: move toasts to the bottom-center on narrow screens
+   so they don't overlap the card
+   ============================================================ */
+@media (max-width: 540px) {
+  #toast-container {
+    top: auto;
+    bottom: 24px;
+    right: 50%;
+    transform: translateX(50%);
+    align-items: center;
+  }
+
+  .toast {
+    min-width: 80vw;
+    text-align: center;
+  }
+}
+/* Fix #2423 */
+:root { --em-base-duration: 300ms; }

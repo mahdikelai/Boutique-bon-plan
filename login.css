@@ -1,0 +1,369 @@
+@import url('assets/css/a11y-forms.css');/* login.css — written by a first year student, keeping it simple! */
+
+/* ============================================================
+   PAGE LAYOUT
+   Mirrors #register-section exactly so both pages look the same.
+   padding-top: 100px gives room below the fixed header.
+   ============================================================ */
+#login-section {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 60px;
+  background: var(--bg-secondary);
+  transition: background-color 0.3s ease;
+}
+
+/* Stacks the back button on top of the card, same as .register-page-wrapper */
+.login-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ============================================================
+   BACK BUTTON
+   Copy-paste of register.css .back-button so they are identical.
+   align-self: flex-start pushes it to the left inside the
+   flex-column wrapper — no position:absolute needed at all.
+   ============================================================ */
+.login-page-wrapper .back-button {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary, #666);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.login-page-wrapper .back-button:hover {
+  color: var(--accent, #088178);
+}
+
+[data-theme='dark'] .login-page-wrapper .back-button {
+  color: #94a3b8;
+}
+
+/* ============================================================
+   THE CARD
+   Matches register's .auth-card values exactly:
+   same max-width, padding, border-radius, shadow, animation.
+   ============================================================ */
+.login-box {
+  width: 100%;
+  max-width: 480px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 48px 40px;
+  box-shadow: 0 10px 40px var(--shadow);
+  border: 1px solid var(--border-color);
+  /* same slide-up animation as register */
+  opacity: 0;
+  transform: translateY(80px);
+  animation: loginSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@keyframes loginSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Heading — same as .auth-card h2 */
+.login-box h2 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 32px;
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+/* Subtitle — same as .auth-card .subtitle */
+.login-box .subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-bottom: 32px;
+  transition: color 0.3s ease;
+}
+
+/* ============================================================
+   FORM GROUPS — mirrors register's .form-group
+   ============================================================ */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+/* ============================================================
+   INPUTS — mirrors register's .form-group input
+   ============================================================ */
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.input-field::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.75;
+}
+
+.input-field:focus {
+  border-color: var(--accent, #088178);
+  box-shadow: 0 0 0 3px rgba(8, 129, 120, 0.15);
+}
+
+[data-theme='dark'] .input-field:focus {
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.18);
+}
+
+/* Validation state borders */
+.input-field.is-valid {
+  border-color: #28a745;
+}
+.input-field.is-invalid {
+  border-color: #dc3545;
+}
+
+/* ============================================================
+   INLINE ERROR MESSAGES
+   Hidden by default (empty span takes no space).
+   JS sets textContent to show them.
+   ============================================================ */
+.error-message {
+  display: block;
+  font-size: 12px;
+  color: #dc3545;
+  margin-top: 5px;
+  min-height: 16px; /* reserves space so layout doesn't jump */
+}
+
+/* ============================================================
+   PASSWORD WRAPPER — same as register's .password-wrapper
+   ============================================================ */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .input-field {
+  padding-right: 46px;
+}
+
+.toggle_password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary, #888);
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.toggle_password:hover {
+  color: var(--accent, #088178);
+}
+
+/* ============================================================
+   REMEMBER ME + FORGOT PASSWORD ROW
+   ============================================================ */
+.remfor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.remember input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: var(--accent, #088178);
+}
+
+.forgot {
+  font-size: 14px;
+  color: var(--accent, #088178);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   SIGN IN BUTTON — mirrors register's .btn-primary
+   ============================================================ */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--accent, #088178);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #066b63;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(8, 129, 120, 0.3);
+}
+
+[data-theme='dark'] .login-btn:hover {
+  background: #0891b2;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.3);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+/* Disabled state while redirecting after success */
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================================
+   REGISTER LINK AT THE BOTTOM — mirrors .switch-auth
+   ============================================================ */
+.signup-link {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.signup-link a {
+  color: var(--accent, #088178);
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.signup-link a:hover {
+  opacity: 0.8;
+}
+
+/* ============================================================
+   CAPTCHA SECTION
+   ============================================================ */
+.captcha-section {
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.captcha-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#captcha-canvas {
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #f3f3f3;
+}
+
+#captcha-refresh {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--card-bg);
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+#captcha-refresh:hover {
+  border-color: var(--accent, #088178);
+  color: var(--accent, #088178);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 540px) {
+  .login-box {
+    padding: 36px 24px;
+  }
+
+  .login-box h2 {
+    font-size: 26px;
+  }
+}
+

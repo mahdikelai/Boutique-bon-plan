@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Bon Plan - كل الأقسام</title>
+    <style>
+        :root { --pink: #e6007e; --pink-soft: #fdeef3; --gold: #d4af37; --black: #1a1a1a; --bg: #ffffff; --wa-green: #25D366; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body { background: var(--bg); color: var(--black); padding-bottom: 90px; }
+        .marquee { background: linear-gradient(90deg, var(--pink), var(--gold)); color: white; padding: 5px 0; font-weight: 700; font-size: 11px; text-align: center; overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .marquee-track { display: flex; width: max-content; animation: scrollMarquee 20s linear infinite; }
+        .marquee-track span { white-space: nowrap; padding-left: 40px; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .page-header { background: white; padding: 14px 16px; text-align: center; border-bottom: 2px solid var(--pink-soft); display: flex; align-items: center; justify-content: space-between; }
+        .page-header .back { text-decoration: none; color: var(--pink); font-size: 22px; font-weight: 700; }
+        .page-header h1 { font-size: 18px; font-weight: 800; color: var(--pink); flex: 1; }
+        .intro { text-align: center; padding: 14px 16px 4px; }
+        .intro h2 { font-size: 17px; color: var(--pink); font-weight: 800; }
+        .intro p { font-size: 12px; color: var(--gold); font-weight: 600; margin-top: 2px; }
+        .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 14px 16px; }
+        .cat-grid a { position: relative; display: block; border-radius: 18px; overflow: hidden; aspect-ratio: 1 / 1; text-decoration: none; box-shadow: 0 6px 18px rgba(0,0,0,0.12); border: 2px solid var(--pink-soft); transition: transform 0.2s; }
+        .cat-grid a:active { transform: scale(0.97); }
+        .cat-grid a img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+        .cat-grid a .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,26,26,0.85), transparent 55%); display: flex; align-items: flex-end; padding: 10px; }
+        .cat-grid a .overlay span { color: white; font-weight: 800; font-size: 14px; line-height: 1.3; }
+        .all-btn { display: block; margin: 6px 16px 20px; background: linear-gradient(135deg, var(--pink) 0%, var(--gold) 55%, var(--black) 100%); color: white; text-align: center; padding: 16px; border-radius: 50px; font-size: 16px; font-weight: 800; text-decoration: none; box-shadow: 0 6px 18px rgba(230,0,126,0.3); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: flex-end; padding: 4px 4px 4px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 200; }
+        .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 9px; font-weight: 700; gap: 1px; position: relative; flex: 1; }
+        .bottom-nav a .icon { font-size: 16px; }
+        .bottom-nav a.active { color: var(--pink); }
+        .bottom-nav a .badge { position: absolute; top: -4px; right: 18px; background: var(--pink); color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; font-weight: 700; display: none; }
+        .bottom-nav a.whatsapp-btn { margin-top: -14px; }
+        .bottom-nav a.whatsapp-btn .icon-circle { background: var(--wa-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 14px rgba(37,211,102,0.5); border: 4px solid white; }
+        .bottom-nav a.whatsapp-btn span:last-child { color: var(--wa-green); margin-top: 2px; }
+    </style>
+</head>
+<body>
+    <div class="marquee"><div class="marquee-track"><span>🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span><span>🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span></div></div>
+    <div class="page-header">
+        <a href="index.html" class="back">→</a>
+        <h1>📂 كل الأقسام</h1>
+        <span style="width:22px"></span>
+    </div>
+    <div class="intro">
+        <h2>🌸 تسوقي حسب القسم 🌸</h2>
+        <p>اختاري القسم اللي يناسبك</p>
+    </div>
+    <div class="cat-grid">
+        <a href="category.html?cat=lingerie"><img src="images/categories/lingerie.png" alt="ملابس داخلية نسائية" /><div class="overlay"><span>👙 ملابس داخلية نسائية</span></div></a>
+        <a href="category.html?cat=ensembles"><img src="images/categories/ensembles.png" alt="أطقم نسائية" /><div class="overlay"><span>🎀 أطقم نسائية</span></div></a>
+        <a href="category.html?cat=bodysuits"><img src="images/categories/bodysuits.png" alt="بودي نسائي" /><div class="overlay"><span>✨ بودي نسائي</span></div></a>
+        <a href="category.html?cat=robes"><img src="images/categories/robes.png" alt="فساتين وملابس نسائية" /><div class="overlay"><span>👗 فساتين وملابس نسائية</span></div></a>
+        <a href="category.html?cat=sleepwear"><img src="images/categories/sleepwear.png" alt="ملابس النوم" /><div class="overlay"><span>🌙 ملابس النوم</span></div></a>
+        <a href="category.html?cat=bridal"><img src="images/categories/bridal.png" alt="تشكيلة العروس" /><div class="overlay"><span>👰🏻‍♀️ تشكيلة العروس</span></div></a>
+        <a href="category.html?cat=shapewear"><img src="images/categories/shapewear.png" alt="ملابس شدّ الجسم" /><div class="overlay"><span>💎 ملابس شدّ الجسم</span></div></a>
+        <a href="category.html?cat=promotions"><img src="images/categories/promotions.png" alt="العروض والتخفيضات" /><div class="overlay"><span>🔥 العروض والتخفيضات</span></div></a>
+    </div>
+    <a href="category.html?cat=all" class="all-btn">🛍️ عرض كل المنتجات</a>
+    <div class="bottom-nav">
+        <a href="index.html"><span class="icon">🏠</span><span>الرئيسية</span></a>
+        <a href="categories.html" class="active"><span class="icon">📂</span><span>الأقسام</span></a>
+        <a href="https://wa.me/213XXXXXXXX" target="_blank" class="whatsapp-btn"><span class="icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.362.686 4.564 1.872 6.418L4 29l7.793-1.837A11.94 11.94 0 0016.001 27C22.63 27 28 21.627 28 15S22.63 3 16.001 3zm6.583 16.943c-.28.786-1.634 1.5-2.257 1.588-.6.086-1.312.122-2.117-.132-.487-.152-1.113-.36-1.918-.706-3.378-1.458-5.585-4.86-5.756-5.088-.17-.228-1.374-1.824-1.374-3.48s.86-2.47 1.166-2.808c.306-.34.667-.424.89-.424.223 0 .446.002.64.012.206.01.482-.078.754.575.28.672.952 2.328 1.036 2.498.084.17.14.37.028.598-.11.228-.166.37-.328.57-.166.2-.348.446-.496.6-.166.17-.34.354-.146.696.194.34.862 1.42 1.85 2.3 1.27 1.132 2.34 1.482 2.68 1.65.34.17.538.142.736-.086.198-.228.848-.988 1.074-1.328.226-.34.452-.284.762-.17.31.114 1.966.928 2.304 1.096.338.17.564.254.648.396.084.142.084.822-.196 1.608z"/></svg></span><span>واتساب</span></a>
+        <a href="index.html#search"><span class="icon">🔍</span><span>بحث</span></a>
+        <a href="cart.html"><span class="icon">🛒</span><span>السلة</span><span class="badge" id="cartCountTop">0</span></a>
+    </div>
+    <script>
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cartCountTop');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'inline' : 'none'; }
+        }
+        updateCartCount();
+    </script>
+</body>
+</html>

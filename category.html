@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Bon Plan - الأقسام</title>
+    <style>
+        :root { --pink: #e6007e; --pink-soft: #fdeef3; --gold: #d4af37; --black: #1a1a1a; --bg: #ffffff; --wa-green: #25D366; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--bg); color: var(--black); padding-bottom: 90px; }
+        .marquee { background: linear-gradient(90deg, var(--pink), var(--gold)); color: white; padding: 12px 0; font-weight: 700; font-size: 16px; text-align: center; overflow: hidden; white-space: nowrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .marquee span { display: inline-block; padding-left: 100%; animation: scrollMarquee 25s linear infinite; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-200%); } }
+        .header { background: white; padding: 10px 16px; text-align: center; border-bottom: 2px solid var(--pink-soft); display: flex; align-items: center; justify-content: space-between; }
+        .header .back { text-decoration: none; color: var(--pink); font-size: 22px; font-weight: 700; }
+        .header h1 { font-size: 16px; font-weight: 800; color: var(--pink); flex: 1; }
+        .search-bar { padding: 6px 16px; background: white; border-bottom: 1px solid var(--pink-soft); }
+        .search-bar input { width: 100%; padding: 8px 16px; border-radius: 50px; border: 2px solid var(--pink-soft); background: var(--pink-soft); font-size: 13px; outline: none; }
+        .search-bar input:focus { border-color: var(--pink); background: white; }
+        .sidebar { background: white; padding: 8px 16px; border-bottom: 1px solid var(--pink-soft); overflow-x: auto; white-space: nowrap; }
+        .sidebar .categories { display: inline-flex; gap: 8px; }
+        .sidebar .categories a { background: var(--pink-soft); padding: 5px 14px; border-radius: 40px; font-size: 12px; font-weight: 600; color: #333; text-decoration: none; border: 2px solid transparent; }
+        .sidebar .categories a.active { background: var(--pink); color: white; border-color: var(--gold); }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px 16px; }
+        .product-card { background: white; border-radius: 24px; padding: 14px 12px 18px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); text-decoration: none; color: inherit; border: 1px solid var(--pink-soft); }
+        .product-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 16px; margin-bottom: 8px; }
+        .product-card h3 { font-size: 16px; font-weight: 700; margin: 6px 0 2px; }
+        .product-card .price { color: var(--pink); font-weight: 800; font-size: 19px; }
+        .no-products { text-align: center; padding: 40px; color: #888; font-size: 20px; grid-column: 1 / -1; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: flex-end; padding: 8px 4px 8px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 200; }
+        .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 12px; font-weight: 700; gap: 4px; position: relative; flex: 1; }
+        .bottom-nav a .icon { font-size: 26px; }
+        .bottom-nav a.active { color: var(--pink); }
+        .bottom-nav a .badge { position: absolute; top: -4px; right: 18px; background: var(--pink); color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; font-weight: 700; display: none; }
+        .bottom-nav a.whatsapp-btn { margin-top: -28px; }
+        .bottom-nav a.whatsapp-btn .icon-circle { background: var(--wa-green); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 14px rgba(37,211,102,0.5); border: 4px solid white; }
+        .bottom-nav a.whatsapp-btn span:last-child { color: var(--wa-green); margin-top: 2px; }
+    
+        .order-now-btn {
+            display: block;
+            margin-top: 10px;
+            background: var(--pink-soft);
+            color: var(--pink);
+            border: 2px solid var(--pink);
+            padding: 8px 0;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            animation: pulseBtn 1.2s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes pulseBtn {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,20,90,0.5); background: var(--pink-soft); }
+            50% { transform: scale(1.05); box-shadow: 0 0 10px 4px rgba(212,20,90,0.35); background: #ffe0ec; }
+        }
+    </style>
+    <script src="custom-products.js"></script>
+</head>
+<body>
+    <div class="marquee"><span>🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 57 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span></div>
+    <div class="header">
+        <a href="index.html" class="back">→</a>
+        <h1 id="pageTitle">المنتجات</h1>
+        <span style="width:22px"></span>
+    </div>
+    <div class="search-bar"><input type="text" id="searchInput" placeholder="🔍 ابحثي عن منتج..." onkeyup="filterProducts()" /></div>
+    <div class="sidebar">
+        <div class="categories" id="categoriesContainer">
+            <a href="?cat=all">الكل</a>
+            <a href="?cat=lingerie">👙 ملابس داخلية نسائية</a>
+            <a href="?cat=ensembles">🎀 أطقم نسائية</a>
+            <a href="?cat=bodysuits">✨ بودي نسائي</a>
+            <a href="?cat=robes">👗 فساتين وملابس نسائية</a>
+            <a href="?cat=sleepwear">🌙 ملابس النوم</a>
+            <a href="?cat=bridal">👰🏻‍♀️ تشكيلة العروس</a>
+            <a href="?cat=shapewear">💎 ملابس شدّ الجسم</a>
+            <a href="?cat=promotions">🔥 العروض والتخفيضات</a>
+            <a href="?cat=packs">🎁 عروض الباك</a>
+        </div>
+    </div>
+    <div class="products-grid" id="productGrid"></div>
+    <div class="bottom-nav">
+        <a href="index.html"><span class="icon">🏠</span><span>الرئيسية</span></a>
+        <a href="category.html?cat=all" class="active"><span class="icon">📂</span><span>الأقسام</span></a>
+        <a href="https://wa.me/213XXXXXXXX" target="_blank" class="whatsapp-btn"><span class="icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="34" height="34" fill="white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.362.686 4.564 1.872 6.418L4 29l7.793-1.837A11.94 11.94 0 0016.001 27C22.63 27 28 21.627 28 15S22.63 3 16.001 3zm6.583 16.943c-.28.786-1.634 1.5-2.257 1.588-.6.086-1.312.122-2.117-.132-.487-.152-1.113-.36-1.918-.706-3.378-1.458-5.585-4.86-5.756-5.088-.17-.228-1.374-1.824-1.374-3.48s.86-2.47 1.166-2.808c.306-.34.667-.424.89-.424.223 0 .446.002.64.012.206.01.482-.078.754.575.28.672.952 2.328 1.036 2.498.084.17.14.37.028.598-.11.228-.166.37-.328.57-.166.2-.348.446-.496.6-.166.17-.34.354-.146.696.194.34.862 1.42 1.85 2.3 1.27 1.132 2.34 1.482 2.68 1.65.34.17.538.142.736-.086.198-.228.848-.988 1.074-1.328.226-.34.452-.284.762-.17.31.114 1.966.928 2.304 1.096.338.17.564.254.648.396.084.142.084.822-.196 1.608z"/></svg></span><span>واتساب</span></a>
+        <a href="index.html#search"><span class="icon">🔍</span><span>بحث</span></a>
+        <a href="cart.html"><span class="icon">🛒</span><span>السلة</span><span class="badge" id="cartCountTop">0</span></a>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeCategory = urlParams.get('cat') || 'all';
+        const catNames = { all: 'كل المنتجات', lingerie: '👙 ملابس داخلية نسائية', ensembles: '🎀 أطقم نسائية', bodysuits: '✨ بودي نسائي', robes: '👗 فساتين وملابس نسائية', sleepwear: '🌙 ملابس النوم', bridal: '👰🏻‍♀️ تشكيلة العروس', shapewear: '💎 ملابس شدّ الجسم', promotions: '🔥 العروض والتخفيضات', packs: '🎁 عروض الباك' };
+        document.getElementById('pageTitle').textContent = catNames[activeCategory] || 'المنتجات';
+        document.querySelectorAll('.categories a').forEach(link => {
+            const linkCat = link.getAttribute('href').split('=')[1] || 'all';
+            if (linkCat === activeCategory) link.classList.add('active');
+        });
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cartCountTop');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'inline' : 'none'; }
+        }
+        loadAllProducts()
+            .then(allProducts => {
+                const grid = document.getElementById('productGrid');
+                grid.innerHTML = '';
+                let filtered = allProducts;
+                if (activeCategory !== 'all') filtered = allProducts.filter(p => p.category === activeCategory);
+                if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">😕 لا توجد منتجات في هذا القسم حالياً</div>'; return; }
+                filtered.forEach(p => {
+                    const imgSrc = p.images ? p.images[0] : p.img;
+                    const card = document.createElement('a');
+                    card.className = 'product-card';
+                    card.href = 'singleProduct.html?id=' + p.id;
+                    card.innerHTML = `<img src="${imgSrc}" alt="${p.name}" /><h3>${p.name}</h3><div class="price">${p.price} دج</div>`;
+                    const orderBtn = document.createElement('a');
+                    orderBtn.className = 'order-now-btn';
+                    orderBtn.href = 'order.html?id=' + p.id;
+                    orderBtn.textContent = '🛍️ أطلب الآن';
+                    orderBtn.onclick = function(e) { e.stopPropagation(); };
+                    card.appendChild(orderBtn);
+                    grid.appendChild(card);
+                });
+            })
+            .catch(() => { document.getElementById('productGrid').innerHTML = '<div class="no-products">لا توجد منتجات حالياً</div>'; });
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = name.includes(query) ? '' : 'none';
+            });
+        }
+        updateCartCount();
+    </script>
+</body>
+</html>

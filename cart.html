@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>السلة - Boutique Bon Plan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f7f2ed; padding: 20px 16px 100px; }
+        .container { max-width: 600px; margin: auto; background: white; border-radius: 32px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+        h1 { color: #b45a6b; font-size: 24px; margin-bottom: 20px; }
+        .back { color: #b45a6b; text-decoration: none; font-weight: 600; display: inline-block; margin-bottom: 16px; }
+        .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; }
+        .cart-item .info { flex: 1; }
+        .cart-item .info h3 { font-size: 16px; }
+        .cart-item .info .price { color: #b45a6b; font-weight: 700; }
+        .cart-item .qty { display: flex; align-items: center; gap: 8px; }
+        .cart-item .qty button { background: #eee; border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+        .cart-item .qty button:hover { background: #ddd; }
+        .cart-item .remove { color: #b45a6b; background: none; border: none; font-size: 20px; cursor: pointer; }
+        .total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; margin-top: 20px; padding-top: 16px; border-top: 2px solid #eee; }
+        .checkout-btn { display: block; width: 100%; background: #b45a6b; color: white; border: none; padding: 14px; border-radius: 40px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 16px; text-align: center; text-decoration: none; }
+        .checkout-btn:hover { background: #9a4a5a; }
+        .empty { text-align: center; padding: 40px 0; color: #888; }
+        .empty .icon { font-size: 48px; display: block; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← العودة للمتجر</a>
+        <h1>🛒 سلة التسوق</h1>
+        <div id="cartItems"></div>
+        <div id="totalContainer" style="display:none;">
+            <div class="total"><span>المجموع</span><span id="totalPrice">0 دج</span></div>
+            <a href="https://wa.me/213XXXXXXXX?text=مرحباً، أريد طلب المنتجات التالية:" target="_blank" class="checkout-btn">💬 اطلب عبر واتساب</a>
+        </div>
+        <div class="empty" id="emptyCart" style="display:none;">
+            <span class="icon">🛒</span>
+            <p>سلتك فارغة</p>
+            <p style="font-size:14px;color:#aaa;">أضف بعض المنتجات الجميلة!</p>
+        </div>
+    </div>
+    <script>
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const container = document.getElementById('cartItems');
+            const totalContainer = document.getElementById('totalContainer');
+            const emptyCart = document.getElementById('emptyCart');
+            const totalPriceEl = document.getElementById('totalPrice');
+
+            if (cart.length === 0) {
+                container.innerHTML = '';
+                totalContainer.style.display = 'none';
+                emptyCart.style.display = 'block';
+                return;
+            }
+            emptyCart.style.display = 'none';
+            totalContainer.style.display = 'block';
+
+            let html = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                html += `
+                    <div class="cart-item">
+                        <img src="${item.image || 'images/placeholder.jpg'}" alt="${item.name}" />
+                        <div class="info">
+                            <h3>${item.name}</h3>
+                            <div class="price">${item.price} دج</div>
+                        </div>
+                        <div class="qty">
+                            <button onclick="updateQuantity(${index}, -1)">−</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove" onclick="removeItem(${index})">✕</button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            totalPriceEl.textContent = total + ' دج';
+        }
+
+        function updateQuantity(index, delta) {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            if (!cart[index]) return;
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            localStorage.setItem('boutique_cart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount();
+        }
+
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            cart.splice(index, 1);
+            localStorage.setItem('boutique_cart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badges = document.querySelectorAll('#cartCount');
+            badges.forEach(b => {
+                b.textContent = count;
+                b.style.display = count > 0 ? 'inline' : 'none';
+            });
+        }
+
+        renderCart();
+        updateCartCount();
+    </script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boutique Bon Plan - منتج</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: #f7f2ed; color: #2d2d2d; padding-bottom: 20px; }
+        
+        .marquee {
+            background: #b45a6b;
+            color: white;
+            padding: 10px 0;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scrollMarquee 25s linear infinite;
+        }
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-200%); }
+        }
+
+        .header {
+            background: white;
+            padding: 16px 20px 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        .header .logo {
+            max-width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 4px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #b45a6b;
+        }
+        .header .sub {
+            font-size: 13px;
+            color: #888;
+        }
+        .header .nav-icons {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            display: flex;
+            gap: 10px;
+        }
+        .header .nav-icons a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #b45a6b;
+            background: #f5f0ec;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .header .nav-icons a:hover {
+            background: #b45a6b;
+            color: white;
+        }
+
+        .top-menu {
+            background: white;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 12px;
+            flex-wrap: wrap;
+        }
+        .top-menu a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #555;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .top-menu a .icon { font-size: 24px; }
+        .top-menu a span { font-size: 10px; }
+        .top-menu a:hover { color: #b45a6b; background: #f5f0ec; }
+        .top-menu a .badge {
+            background: #b45a6b;
+            color: white;
+            border-radius: 50%;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 24px;
+            border-radius: 32px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .gallery img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .gallery img:hover { transform: scale(1.03); }
+        .price {
+            font-size: 26px;
+            font-weight: 700;
+            color: #b45a6b;
+            margin: 10px 0;
+        }
+        .add-to-cart-btn {
+            background: #b45a6b;
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 14px;
+        }
+        .add-to-cart-btn:hover { background: #9a4a5a; transform: scale(1.02); }
+        .cart-message {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #2d7d46;
+            display: none;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 20px; right: 25px;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.08);
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox .close:hover { background: rgba(255,255,255,0.2); }
+        .lightbox .main-image {
+            max-width: 90%;
+            max-height: 70vh;
+            border-radius: 16px;
+        }
+        .lightbox .nav {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+            align-items: center;
+        }
+        .lightbox .nav button {
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .lightbox .nav button:hover { background: rgba(255,255,255,0.25); }
+        .lightbox .counter {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .lightbox .thumbnails {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .lightbox .thumbnails img {
+            width: 44px; height: 44px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.5;
+            border: 2px solid transparent;
+        }
+        .lightbox .thumbnails img.active {
+            opacity: 1;
+            border-color: white;
+        }
+        .lightbox .thumbnails img:hover { opacity: 0.8; }
+
+        @media (max-width: 600px) {
+            .header .logo { max-width: 80px; }
+            .header h1 { font-size: 20px; }
+            .header .sub { font-size: 11px; }
+            .header .nav-icons { top: 12px; left: 10px; }
+            .header .nav-icons a { font-size: 12px; padding: 4px 8px; }
+            .container { padding: 10px; margin: 4px; max-width: 100%; }
+            .gallery img { max-width: 200px; }
+            .lightbox .nav button { width: 40px; height: 40px; font-size: 20px; }
+            .lightbox .thumbnails img { width: 36px; height: 36px; }
+        }
+    </style>
+    <script src="custom-products.js"></script>
+</head>
+<body>
+    <div class="marquee">
+        <span>🚚 التوصيل متوفر لـ 69 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 69 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة  •  🚚 التوصيل متوفر لـ 69 ولاية  •  الدفع عند الاستلام  •  جودة مضمونة</span>
+    </div>
+
+    <div class="header">
+        <div class="nav-icons">
+            <a href="javascript:history.back()">← رجوع</a>
+            <a href="index.html">🏠</a>
+        </div>
+        <img src="images/logo.png" alt="Boutique Bon Plan" class="logo" />
+        <h1>Boutique Bon Plan</h1>
+        <div class="sub">👗 أناقة • راحة • تميّز</div>
+    </div>
+
+    <div class="top-menu">
+        <a href="index.html"><span class="icon">🏠</span><span>الرئيسية</span></a>
+        <a href="#categories"><span class="icon">📂</span><span>الأقسام</span></a>
+        <a href="https://wa.me/213XXXXXXXX" target="_blank"><span class="icon">💬</span><span>واتساب</span></a>
+        <a href="#search"><span class="icon">🔍</span><span>بحث</span></a>
+        <a href="cart.html"><span class="icon">🛒</span><span>السلة</span><span class="badge" id="cartCountTop">0</span></a>
+    </div>
+
+    <div class="container" id="productContainer">
+        <h1 id="productName">جاري التحميل...</h1>
+        <div class="price" id="productPrice"></div>
+        <div class="gallery" id="productGallery"></div>
+        <p id="productBrand"></p>
+        <button class="add-to-cart-btn" onclick="addToCart()">🛒 أضف إلى السلة</button>
+        <div class="cart-message" id="cartMessage">✅ تمت الإضافة إلى السلة!</div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close" onclick="closeLightbox()">✕</span>
+        <img class="main-image" id="lightboxImg" src="" alt="الصورة المكبرة" />
+        <div class="nav">
+            <button onclick="prevImage()">‹</button>
+            <span class="counter" id="imageCounter">1 / 1</span>
+            <button onclick="nextImage()">›</button>
+        </div>
+        <div class="thumbnails" id="thumbnailsContainer"></div>
+    </div>
+
+    <script>
+        let currentProduct = null;
+        let currentImages = [];
+        let currentIndex = 0;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        if (!productId) {
+            document.getElementById('productName').textContent = 'المنتج غير موجود';
+            throw new Error('Product ID not found');
+        }
+
+        loadAllProducts()
+            .then(products => {
+                const product = products.find(p => p.id === productId);
+                if (!product) {
+                    document.getElementById('productName').textContent = 'المنتج غير موجود';
+                    return;
+                }
+                currentProduct = product;
+                document.getElementById('productName').textContent = product.name;
+                document.getElementById('productPrice').textContent = product.price + ' دج';
+                document.getElementById('productBrand').textContent = 'ماركة: ' + (product.brand || 'Boutique Bon Plan');
+
+                const gallery = document.getElementById('productGallery');
+                const images = product.images || (product.img ? [product.img] : []);
+                if (images.length === 0) {
+                    gallery.innerHTML = '<p>لا توجد صور لهذا المنتج</p>';
+                    return;
+                }
+                currentImages = images;
+                images.forEach((src, idx) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = product.name;
+                    img.onclick = function() { openLightbox(idx); };
+                    gallery.appendChild(img);
+                });
+            })
+            .catch(err => {
+                document.getElementById('productName').textContent = 'حدث خطأ';
+                console.error(err);
+            });
+
+        function addToCart() {
+            if (!currentProduct) return;
+            let cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const existing = cart.find(item => item.id === currentProduct.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    image: (currentProduct.images ? currentProduct.images[0] : currentProduct.img) || '',
+                    quantity: 1
+                });
+            }
+            localStorage.setItem('boutique_cart', JSON.stringify(cart));
+            const msg = document.getElementById('cartMessage');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 2500);
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('#cartCountTop').forEach(b => {
+                b.textContent = count;
+                b.style.display = count > 0 ? 'inline' : 'none';
+            });
+        }
+
+        function openLightbox(index) {
+            if (currentImages.length === 0) return;
+            currentIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            const counter = document.getElementById('imageCounter');
+            const thumbs = document.getElementById('thumbnailsContainer');
+            img.src = currentImages[currentIndex];
+            counter.textContent = (currentIndex + 1) + ' / ' + currentImages.length;
+            thumbs.innerHTML = '';
+            currentImages.forEach((src, i) => {
+                const thumb = document.createElement('img');
+                thumb.src = src;
+                thumb.className = (i === currentIndex) ? 'active' : '';
+                thumb.onclick = function(e) { e.stopPropagation(); goToImage(i); };
+                thumbs.appendChild(thumb);
+            });
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function goToImage(index) {
+            if (index < 0) index = currentImages.length - 1;
+            if (index >= currentImages.length) index = 0;
+            currentIndex = index;
+            document.getElementById('lightboxImg').src = currentImages[currentIndex];
+            document.getElementById('imageCounter').textContent = (currentIndex + 1) + ' / ' + currentImages.length;
+            document.querySelectorAll('#thumbnailsContainer img').forEach((thumb, i) => {
+                thumb.className = (i === currentIndex) ? 'active' : '';
+            });
+        }
+
+        function nextImage() { goToImage(currentIndex + 1); }
+        function prevImage() { goToImage(currentIndex - 1); }
+
+        let touchStartX = 0;
+        document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.getElementById('lightbox').addEventListener('touchend', function(e) {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextImage();
+                else prevImage();
+            }
+        }, { passive: true });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        updateCartCount();
+    </script>
+</body>
+</html>
