@@ -417,5 +417,32 @@ def update_product_category():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+COLORS_FILE = os.path.join(BASE_DIR, "colors.json")
+
+@app.route('/get-colors', methods=['GET'])
+def get_colors():
+    try:
+        with open(COLORS_FILE, encoding='utf-8') as f:
+            return jsonify(json.load(f))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/save-colors', methods=['POST'])
+def save_colors():
+    try:
+        data = request.get_json()
+
+        with open(COLORS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', 'تحديث ألوان الموقع'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -31,12 +31,13 @@
         .prod-item .info { flex: 1; font-size: 13px; }
         .prod-item .info b { display: block; }
         .prod-item button { background: #fee2e2; color: #dc2626; border: none; border-radius: 8px; padding: 8px 12px; font-weight: 700; cursor: pointer; }
-        .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
-        .tab-btn { flex: 1; padding: 10px; border-radius: 10px; border: none; background: var(--pink-soft); color: var(--black); font-weight: 700; cursor: pointer; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .tab-btn { flex: 1 1 30%; min-width: 90px; padding: 10px 6px; border-radius: 10px; border: none; background: var(--pink-soft); color: var(--black); font-weight: 700; cursor: pointer; font-size: 13px; }
         .tab-btn.active { background: var(--pink); color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     </style>
+    <script src="apply-colors.js"></script>
 </head>
 <body>
     <div class="header">
@@ -50,6 +51,7 @@
             <button class="tab-btn" onclick="showTab('delivery')">🚚 أسعار التوصيل</button>
             <button class="tab-btn" onclick="showTab('categories')">📂 الأقسام</button>
             <button class="tab-btn" onclick="showTab('banners')">🖼️ البانرات</button>
+            <button class="tab-btn" onclick="showTab('colors')">🎨 الألوان</button>
         </div>
 
         <div class="tab-content active" id="tab-add">
@@ -144,6 +146,12 @@
             <h3 style="margin-bottom:10px;">🖼️ البانرات الحالية</h3>
             <div id="bannersList"></div>
         </div>
+
+        <div class="tab-content" id="tab-colors">
+            <h3 style="margin-bottom:10px;">🎨 ألوان الموقع</h3>
+            <div id="colorsForm"></div>
+            <button onclick="saveColors()" style="width:100%; padding:10px; background:#e6007e; color:white; border:none; border-radius:8px; font-weight:700; margin-top:10px;">💾 حفظ ونشر الألوان</button>
+        </div>
     </div>
 
     <script>
@@ -158,6 +166,61 @@
             if (tab === 'delivery') renderDeliveryList();
             if (tab === 'categories') renderCategoriesList();
             if (tab === 'banners') renderBannersList();
+            if (tab === 'colors') renderColorsForm();
+        }
+
+        const colorLabels = {
+            '--pink': 'اللون الوردي الأساسي',
+            '--pink-soft': 'الوردي الفاتح',
+            '--gold': 'اللون الذهبي',
+            '--black': 'اللون الأسود',
+            '--bg': 'خلفية الموقع',
+            '--wa-green': 'أخضر واتساب'
+        };
+
+        function renderColorsForm() {
+            const form = document.getElementById('colorsForm');
+            form.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-colors')
+                .then(res => res.json())
+                .then(colors => {
+                    form.innerHTML = '';
+                    Object.keys(colors).forEach(key => {
+                        const row = document.createElement('div');
+                        row.style.cssText = 'display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #eee;';
+                        row.innerHTML = `
+                            <input type="color" value="${colors[key]}" id="color-${key}" style="width:44px; height:34px; border:none; border-radius:6px;" />
+                            <div style="flex:1; font-size:13px;">${colorLabels[key] || key}</div>
+                        `;
+                        form.appendChild(row);
+                    });
+                })
+                .catch(() => {
+                    form.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
+        }
+
+        function saveColors() {
+            const colors = {};
+            Object.keys(colorLabels).forEach(key => {
+                const input = document.getElementById('color-' + key);
+                if (input) colors[key] = input.value;
+            });
+
+            fetch('http://localhost:5000/save-colors', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(colors)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم حفظ الألوان ونشرها');
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
         }
 
         function renderBannersList() {

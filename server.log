@@ -5,16 +5,17 @@
  * Running on http://127.0.0.1:5000
  * Running on http://100.126.91.49:5000
 [33mPress CTRL+C to quit[0m
-127.0.0.1 - - [15/Aug/2026 17:56:04] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [15/Aug/2026 17:56:24] "OPTIONS /update-product-category HTTP/1.1" 200 -
-[main 4ea2f07] تغيير فئة منتج: 1786799551101
- 11 files changed, 1093 insertions(+), 155 deletions(-)
- create mode 100644 banners.json
- create mode 100644 categories.json
- create mode 100644 delivery-prices.json
- create mode 100644 store-config.js
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   4d75be1..4ea2f07  main -> main
-127.0.0.1 - - [15/Aug/2026 17:56:27] "POST /update-product-category HTTP/1.1" 200 -
-127.0.0.1 - - [15/Aug/2026 17:57:29] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [15/Aug/2026 17:57:42] "OPTIONS /update-product-category HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:05:16] "GET /get-colors HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:45] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:46] "GET /get-delivery-prices HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:47] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:47] "GET /get-delivery-prices HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:48] "GET /get-colors HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:49] "GET /get-banners HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:07:50] "GET /get-categories HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:23:00] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:23:19] "GET /get-delivery-prices HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:23:50] "GET /get-categories HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:24:23] "GET /get-banners HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 18:24:46] "GET /get-colors HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 23:07:13] "OPTIONS /add-product HTTP/1.1" 200 -
