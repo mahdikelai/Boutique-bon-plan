@@ -62,6 +62,19 @@ const products = [
     style: ""
   }
 
+  ,{
+    id: 1786799551101, category: "sleepwear",
+    brand: "Boutique Bon Plan",
+    name: "بيستي شورت كيتي ❤️",
+    price: 800,
+    images: [
+      "images/products/بيستي-شورت-كيتي-1786799551101/1.jpg", "images/products/بيستي-شورت-كيتي-1786799551101/2.jpg", "images/products/بيستي-شورت-كيتي-1786799551101/3.jpg", "images/products/بيستي-شورت-كيتي-1786799551101/4.jpg"
+    ],
+    rating: 5.0,
+    color: "اسود ، أحمر ، ابيض ، أزرق",
+    style: ""
+  }
+
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
   ,{
     id: 102, category: "lingerie",

@@ -1,0 +1,9 @@
+nohup: ignoring input
+ * Serving Flask app 'admin_server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://100.126.91.49:5000
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [15/Aug/2026 14:12:31] "OPTIONS /add-product HTTP/1.1" 200 -

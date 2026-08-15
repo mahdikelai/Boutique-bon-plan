@@ -161,11 +161,25 @@
             };
             if (desc) product.description = desc;
 
-            const existing = JSON.parse(localStorage.getItem('boutique_custom_products') || '[]');
-            existing.push(product);
-            localStorage.setItem('boutique_custom_products', JSON.stringify(existing));
-
+            document.getElementById('successMsg').innerHTML = '⏳ جاري النشر...';
             document.getElementById('successMsg').classList.add('show');
+
+            fetch('http://localhost:5000/add-product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(product)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('successMsg').innerHTML = '✅ تم إضافة المنتج ونشره بنجاح!';
+                } else {
+                    document.getElementById('successMsg').innerHTML = '❌ خطأ: ' + (data.error || 'مشكل غير معروف');
+                }
+            })
+            .catch(err => {
+                document.getElementById('successMsg').innerHTML = '❌ السيرفر غير متصل. تأكدي أنه خدام.';
+            });
             document.getElementById('pname').value = '';
             document.getElementById('pprice').value = '';
             document.getElementById('pcolor').value = '';
