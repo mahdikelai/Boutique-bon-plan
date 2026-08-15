@@ -317,6 +317,11 @@
             <h3 style="font-size:16px; margin-bottom:10px;">⭐ آراء الزبونات</h3>
             <div id="reviewsContainer"></div>
         </div>
+
+        <div id="socialProof" style="position:fixed; bottom:70px; left:12px; right:12px; max-width:340px; margin:0 auto; background:white; border-radius:14px; padding:10px 14px; box-shadow:0 6px 20px rgba(0,0,0,0.15); font-size:12px; display:flex; align-items:center; gap:8px; transform:translateY(120%); transition:transform 0.4s ease; z-index:500;">
+            <span style="font-size:20px;">🛍️</span>
+            <span id="socialProofText"></span>
+        </div>
         <div class="cart-message" id="cartMessage">✅ تمت الإضافة إلى السلة!</div>
     </div>
 
@@ -362,6 +367,8 @@
                     stockEl.textContent = '🔥 باقي ' + product.stock + ' قطع فقط!';
                     stockEl.style.display = 'block';
                 }
+
+                startSocialProof(product.name);
 
                 fetch('reviews.json?t=' + Date.now())
                     .then(res => res.json())
@@ -497,6 +504,27 @@
         });
 
         updateCartCount();
+
+        function startSocialProof(productName) {
+            const names = ['سارة', 'أمينة', 'خديجة', 'إيمان', 'نور الهدى', 'مريم', 'ياسمين', 'فاطمة الزهراء', 'حنان', 'وردة'];
+            const cities = ['الجزائر', 'وهران', 'قسنطينة', 'سطيف', 'بجاية', 'تلمسان', 'البليدة', 'عنابة'];
+            const box = document.getElementById('socialProof');
+            const text = document.getElementById('socialProofText');
+            if (!box || !text) return;
+
+            function showOne() {
+                const name = names[Math.floor(Math.random() * names.length)];
+                const city = cities[Math.floor(Math.random() * cities.length)];
+                const minutesAgo = Math.floor(Math.random() * 20) + 1;
+                text.innerHTML = '<b>' + name + '</b> من ' + city + ' طلبت هذا المنتج منذ ' + minutesAgo + ' دقيقة';
+                box.style.transform = 'translateY(0)';
+                setTimeout(() => { box.style.transform = 'translateY(120%)'; }, 4500);
+            }
+
+            setTimeout(showOne, 3000);
+            setInterval(showOne, 14000);
+        }
+
     </script>
 </body>
 </html>
