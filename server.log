@@ -7,3 +7,9 @@ nohup: ignoring input
  * Running on http://10.216.159.128:5000
 [33mPress CTRL+C to quit[0m
 127.0.0.1 - - [16/Aug/2026 00:13:38] "OPTIONS /update-product-category HTTP/1.1" 200 -
+[main d90fbf4] تغيير فئة منتج: 1786835329992
+ 2 files changed, 3 insertions(+), 36 deletions(-)
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+   ad0302f..d90fbf4  main -> main
+127.0.0.1 - - [16/Aug/2026 00:13:40] "POST /update-product-category HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 00:14:12] "OPTIONS /delete-product HTTP/1.1" 200 -
