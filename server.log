@@ -10,3 +10,18 @@
  2 files changed, 10 insertions(+), 13 deletions(-)
 [main 67f72fd] تقييم جديد: Fify
  2 files changed, 9 insertions(+)
+[main e98367b] تقييم جديد: Fify
+ 2 files changed, 9 insertions(+)
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+   758a728..c423c36  main -> main
+127.0.0.1 - - [15/Aug/2026 23:42:26] "POST /add-review HTTP/1.1" 200 -
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at 67f72fdb94acfeb425fbdf28340e562afd295e8f but expected 758a728d8045cf61d7a79727e812a6cf57a9c4fe)
+error: failed to push some refs to 'https://github.com/mahdikelai/Boutique-bon-plan.git'
+127.0.0.1 - - [15/Aug/2026 23:42:27] "[35m[1mPOST /add-review HTTP/1.1[0m" 500 -
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+   67f72fd..e98367b  main -> main
+127.0.0.1 - - [15/Aug/2026 23:42:27] "POST /add-review HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 23:42:28] "GET /get-reviews HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 23:42:34] "GET /get-reviews HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 23:42:40] "OPTIONS /delete-review HTTP/1.1" 200 -
