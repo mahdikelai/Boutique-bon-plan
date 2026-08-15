@@ -18,6 +18,14 @@ def slugify(name):
     s = re.sub(r'[^\w\u0600-\u06FF]+', '-', name.strip())
     return s.strip('-')[:40] or "product"
 
+def js_escape(text):
+    if text is None:
+        return ""
+    text = text.replace('\\', '\\\\')
+    text = text.replace('"', '\\"')
+    text = text.replace('\n', '\\n').replace('\r', '')
+    return text
+
 @app.route('/add-product', methods=['POST'])
 def add_product():
     try:
@@ -52,18 +60,24 @@ def add_product():
             rel_path = f"images/products/{folder_name}/{i}.{ext}"
             image_paths.append(rel_path)
 
+        safe_category = js_escape(category)
+        safe_name = js_escape(name)
+        safe_color = js_escape(color)
+        safe_style = js_escape(style)
+        safe_desc = js_escape(desc)
+
         product_js = f'''
   ,{{
-    id: {product_id}, category: "{category}",
+    id: {product_id}, category: "{safe_category}",
     brand: "Boutique Bon Plan",
-    name: "{name}",
+    name: "{safe_name}",
     price: {price},
     images: [
       {", ".join(chr(34) + p + chr(34) for p in image_paths)}
     ],
     rating: 5.0,
-    color: "{color}",
-    style: "{style}"{f", description: {chr(34)}{desc}{chr(34)}" if desc else ""}
+    color: "{safe_color}",
+    style: "{safe_style}"{f", description: {chr(34)}{safe_desc}{chr(34)}" if desc else ""}
   }}
 '''
 
