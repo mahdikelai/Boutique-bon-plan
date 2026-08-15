@@ -1,4 +1,4 @@
-const products = [
+
   {
     id: 100, category: "robes",
     brand: "Boutique Bon Plan",
@@ -45,6 +45,21 @@ const products = [
     rating: 4.8,
     color: "",
     style: "انيق وخفيف"
+  }
+
+  ,{
+    id: 1786700001, category: "lingerie",
+    brand: "Boutique Bon Plan",
+    name: "3 بياس ريال مدريد 🖤🤍",
+    price: 1200,
+    images: [
+      "images/products/pack-real-madrid/1.jpg",
+      "images/products/pack-real-madrid/2.jpg",
+      "images/products/pack-real-madrid/3.jpg"
+    ],
+    rating: 5.0,
+    color: "أبيض",
+    style: ""
   }
 
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
