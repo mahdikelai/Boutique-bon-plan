@@ -194,30 +194,49 @@
 
         function renderProductsList() {
             const list = document.getElementById('productsList');
-            const products = JSON.parse(localStorage.getItem('boutique_custom_products') || '[]');
-            if (products.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش منتجات مزادة يدويا حتى الآن</p>';
-                return;
-            }
-            list.innerHTML = '<h3>📦 المنتجات المزادة (' + products.length + ')</h3>';
-            products.forEach(p => {
-                const item = document.createElement('div');
-                item.className = 'prod-item';
-                item.innerHTML = `
-                    <img src="${p.images[0]}" />
-                    <div class="info"><b>${p.name}</b>${p.price} دج</div>
-                    <button onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-                `;
-                list.appendChild(item);
-            });
+            list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">⏳ جاري التحميل...</p>';
+            fetch('http://localhost:5000/get-products')
+                .then(res => res.json())
+                .then(products => {
+                    if (!products.length) {
+                        list.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">مافيش منتجات حتى الآن</p>';
+                        return;
+                    }
+                    list.innerHTML = '<h3>📦 كل المنتجات (' + products.length + ')</h3>';
+                    products.forEach(p => {
+                        const item = document.createElement('div');
+                        item.className = 'prod-item';
+                        const img = (p.images ? p.images[0] : p.img) || '';
+                        item.innerHTML = `
+                            <img src="${img}" />
+                            <div class="info"><b>${p.name}</b>${p.price} دج</div>
+                            <button onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+                        `;
+                        list.appendChild(item);
+                    });
+                })
+                .catch(() => {
+                    list.innerHTML = '<p style="text-align:center; color:red; padding:20px;">❌ السيرفر غير متصل</p>';
+                });
         }
 
         function deleteProduct(id) {
             if (!confirm('متأكدة تحبي تحذفي هذا المنتج؟')) return;
-            let products = JSON.parse(localStorage.getItem('boutique_custom_products') || '[]');
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('boutique_custom_products', JSON.stringify(products));
-            renderProductsList();
+            fetch('http://localhost:5000/delete-product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ تم حذف المنتج ونشر التحديث');
+                } else {
+                    alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                }
+                renderProductsList();
+            })
+            .catch(() => alert('❌ السيرفر غير متصل'));
         }
     </script>
 </body>

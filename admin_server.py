@@ -88,5 +88,54 @@ def add_product():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/delete-product', methods=['POST'])
+def delete_product():
+    try:
+        data = request.get_json()
+        product_id = data.get('id')
+        if not product_id:
+            return jsonify({"error": "معرف المنتج ناقص"}), 400
+
+        with open(PRODUCTS_FILE, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        pattern = re.compile(
+            r',?\s*\{\s*id:\s*' + str(product_id) + r',.*?\n\s*\}',
+            re.DOTALL
+        )
+        new_content, count = pattern.subn('', content, count=1)
+
+        if count == 0:
+            return jsonify({"error": "ماتلقاش المنتج"}), 404
+
+        with open(PRODUCTS_FILE, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+        subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'commit', '-m', f'حذف منتج: {product_id}'], cwd=BASE_DIR, check=True)
+        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
+
+        return jsonify({"success": True, "message": "تم حذف المنتج ونشر التحديث"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/get-products', methods=['GET'])
+def get_products():
+    try:
+        with open(PRODUCTS_FILE, 'r', encoding='utf-8') as f:
+            content = f.read()
+        match = re.search(r'const products = (\[[\s\S]*?\]);', content)
+        if not match:
+            return jsonify([])
+        products_str = match.group(1)
+        products_str = re.sub(r'/\*[\s\S]*?\*/', '', products_str)
+        products_str = re.sub(r',(\s*[\]\}])', r'\1', products_str)
+        products_str = re.sub(r'([{,]\s*)(\w+):', r'\1"\2":', products_str)
+        products = json.loads(products_str)
+        return jsonify(products)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

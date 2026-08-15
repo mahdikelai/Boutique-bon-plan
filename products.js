@@ -31,21 +31,7 @@ const products = [
     style: "sexy",
     description: "👗 أناقة وتميّز لكل امرأة تحب تكون أنيقة 💕"
   }
-  ,{
-    id: 1786743015704, category: "sleepwear",
-    brand: "Boutique Bon Plan",
-    name: "بيجامة كيتي ❤️",
-    price: 1000,
-    images: [
-      "images/products/mahdi.jpg/1.jpg",
-      "images/products/mahdi.jpg/2.jpg",
-      "images/products/mahdi.jpg/3.jpg",
-      "images/products/mahdi.jpg/4.jpg"
-    ],
-    rating: 4.8,
-    color: "",
-    style: "انيق وخفيف"
-  }
+  
 
   ,{
     id: 1786700001, category: "lingerie",
