@@ -34,3 +34,10 @@ To https://github.com/mahdikelai/Boutique-bon-plan.git
 127.0.0.1 - - [16/Aug/2026 00:15:29] "POST /add-product HTTP/1.1" 200 -
 127.0.0.1 - - [16/Aug/2026 00:15:29] "GET /get-products HTTP/1.1" 200 -
 127.0.0.1 - - [16/Aug/2026 00:16:23] "OPTIONS /delete-product HTTP/1.1" 200 -
+[main 75882b1] حذف منتج: 1786835723546
+ 2 files changed, 15 insertions(+), 12 deletions(-)
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+   ace56d7..75882b1  main -> main
+127.0.0.1 - - [16/Aug/2026 00:16:27] "POST /delete-product HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 00:16:30] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 00:27:08] "OPTIONS /add-product HTTP/1.1" 200 -

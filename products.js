@@ -91,6 +91,19 @@ const products = [
 
   
 
+  ,{
+    id: 1786836428497, category: "robes",
+    brand: "Boutique Bon Plan",
+    name: "فوندغوب مشرشفة موتيف بابيو",
+    price: 1200,
+    images: [
+      "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/1.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/2.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/3.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/4.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/5.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/6.jpg", "images/products/فوندغوب-مشرشفة-موتيف-بابيو-1786836428497/7.jpg"
+    ],
+    rating: 5.0,
+    color: "",
+    style: ""
+  }
+
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
   ,{
     id: 102, category: "lingerie",
