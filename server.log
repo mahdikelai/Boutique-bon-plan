@@ -25,3 +25,9 @@ To https://github.com/mahdikelai/Boutique-bon-plan.git
 127.0.0.1 - - [15/Aug/2026 23:42:28] "GET /get-reviews HTTP/1.1" 200 -
 127.0.0.1 - - [15/Aug/2026 23:42:34] "GET /get-reviews HTTP/1.1" 200 -
 127.0.0.1 - - [15/Aug/2026 23:42:40] "OPTIONS /delete-review HTTP/1.1" 200 -
+[main e470d0d] حذف تقييم
+ 2 files changed, 15 insertions(+), 7 deletions(-)
+To https://github.com/mahdikelai/Boutique-bon-plan.git
+   e98367b..e470d0d  main -> main
+127.0.0.1 - - [15/Aug/2026 23:42:42] "POST /delete-review HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 23:42:43] "GET /get-reviews HTTP/1.1" 200 -
