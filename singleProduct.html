@@ -98,13 +98,19 @@
         .top-menu a span { font-size: 10px; }
         .top-menu a:hover { color: #b45a6b; background: #f5f0ec; }
         .top-menu a .badge {
-            background: #b45a6b;
             color: white;
             border-radius: 50%;
             padding: 1px 6px;
             font-size: 10px;
             font-weight: 700;
-            display: none;
+            display: inline-block;
+            animation: badgePulse 1.4s ease-in-out infinite;
+        }
+        .top-menu a .badge.badge-empty { background: #e6007e; }
+        .top-menu a .badge.badge-filled { background: #e11d48; }
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230,0,126,0.5); }
+            50% { transform: scale(1.15); box-shadow: 0 0 6px 3px rgba(230,0,126,0.35); }
         }
 
         .container {
@@ -442,7 +448,8 @@
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.querySelectorAll('#cartCountTop').forEach(b => {
                 b.textContent = count;
-                b.style.display = count > 0 ? 'inline' : 'none';
+                b.classList.remove('badge-empty', 'badge-filled');
+                b.classList.add(count > 0 ? 'badge-filled' : 'badge-empty');
             });
         }
 

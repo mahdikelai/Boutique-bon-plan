@@ -29,7 +29,13 @@
         .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 9px; font-weight: 700; gap: 1px; position: relative; flex: 1; }
         .bottom-nav a .icon { font-size: 16px; }
         .bottom-nav a.active { color: var(--pink); }
-        .bottom-nav a .badge { position: absolute; top: -4px; right: 18px; background: var(--pink); color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; font-weight: 700; display: none; }
+        .bottom-nav a .badge { position: absolute; top: -4px; right: 18px; color: white; border-radius: 50%; padding: 1px 6px; font-size: 10px; font-weight: 700; display: inline-block; animation: badgePulse 1.4s ease-in-out infinite; }
+        .bottom-nav a .badge.badge-empty { background: var(--pink); }
+        .bottom-nav a .badge.badge-filled { background: #e11d48; }
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230,0,126,0.5); }
+            50% { transform: scale(1.15); box-shadow: 0 0 6px 3px rgba(230,0,126,0.35); }
+        }
         .bottom-nav a.whatsapp-btn { margin-top: -14px; }
         .bottom-nav a.whatsapp-btn .icon-circle { background: var(--wa-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 14px rgba(37,211,102,0.5); border: 4px solid white; }
         .bottom-nav a.whatsapp-btn span:last-child { color: var(--wa-green); margin-top: 2px; }
@@ -62,7 +68,11 @@
             const cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             const badge = document.getElementById('cartCountTop');
-            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'inline' : 'none'; }
+            if (badge) {
+                badge.textContent = count;
+                badge.classList.remove('badge-empty', 'badge-filled');
+                badge.classList.add(count > 0 ? 'badge-filled' : 'badge-empty');
+            }
         }
         updateCartCount();
     </script>

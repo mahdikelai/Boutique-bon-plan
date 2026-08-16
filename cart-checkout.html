@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Bon Plan - إتمام طلب السلة</title>
+    <style>
+        :root { --pink: #e6007e; --pink-soft: #fdeef3; --gold: #d4af37; --black: #1a1a1a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-text-size-adjust: 100%; }
+        body { background: #fff; color: var(--black); padding-bottom: 40px; }
+        .header { background: linear-gradient(90deg, var(--pink), var(--gold)); color: white; padding: 14px 16px; text-align: center; display: flex; align-items: center; justify-content: space-between; }
+        .header .back { text-decoration: none; color: white; font-size: 20px; font-weight: 700; }
+        .header h1 { font-size: 16px; font-weight: 800; flex: 1; }
+        .cart-summary { margin: 14px 16px; }
+        .cart-summary-item { display: flex; align-items: center; gap: 12px; background: var(--pink-soft); padding: 10px; border-radius: 14px; margin-bottom: 8px; }
+        .cart-summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
+        .cart-summary-item .info { flex: 1; }
+        .cart-summary-item .info b { display: block; font-size: 13px; }
+        .cart-summary-item .info span { color: var(--pink); font-weight: 800; font-size: 13px; }
+        .form-section { padding: 0 16px; }
+        label { display: block; font-size: 13px; font-weight: 700; margin: 14px 0 6px; }
+        input, select, textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--pink-soft); font-size: 14px; background: white; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--pink); }
+        textarea { resize: vertical; min-height: 60px; }
+        .delivery-options { display: flex; gap: 10px; margin-top: 6px; }
+        .delivery-options label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--pink-soft); padding: 12px; border-radius: 12px; font-weight: 700; font-size: 13px; margin: 0; cursor: pointer; border: 2px solid transparent; }
+        .delivery-options input[type="radio"] { width: auto; accent-color: var(--pink); }
+        .delivery-options label.active { border-color: var(--pink); background: #ffe0ec; }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, var(--pink), var(--gold)); color: white; border: none; padding: 16px; border-radius: 40px; font-size: 16px; font-weight: 800; margin-top: 24px; cursor: pointer; }
+        .price-link { text-align: center; display: block; margin-top: 10px; font-size: 12px; color: var(--pink); text-decoration: none; font-weight: 700; }
+        .error-msg { color: #dc2626; font-size: 12px; margin-top: 4px; display: none; }
+    </style>
+    <script src="apply-colors.js"></script>
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1d6155b900e74d6fbfd583cd9d9e996b"}'></script>
+</head>
+<body>
+    <div class="header">
+        <a href="cart.html" class="back">→</a>
+        <h1>🛍️ إتمام طلب السلة</h1>
+        <span style="width:20px"></span>
+    </div>
+
+    <div class="cart-summary" id="cartSummary"></div>
+
+    <div class="form-section">
+        <label>الاسم واللقب *</label>
+        <input type="text" id="fullName" placeholder="مثلا: فاطمة بن علي" />
+
+        <label>رقم الهاتف *</label>
+        <input type="tel" id="phone" placeholder="0555 12 34 56" />
+
+        <label>الولاية *</label>
+        <select id="wilaya">
+            <option value="">اختاري الولاية</option>
+            <option>01 - أدرار</option><option>02 - الشلف</option><option>03 - الأغواط</option>
+            <option>04 - أم البواقي</option><option>05 - باتنة</option><option>06 - بجاية</option>
+            <option>07 - بسكرة</option><option>08 - بشار</option><option>09 - البليدة</option>
+            <option>10 - البويرة</option><option>11 - تمنراست</option><option>12 - تبسة</option>
+            <option>13 - تلمسان</option><option>14 - تيارت</option><option>15 - تيزي وزو</option>
+            <option>16 - الجزائر العاصمة</option><option>17 - الجلفة</option><option>18 - جيجل</option>
+            <option>19 - سطيف</option><option>20 - سعيدة</option><option>21 - سكيكدة</option>
+            <option>22 - سيدي بلعباس</option><option>23 - عنابة</option><option>24 - قالمة</option>
+            <option>25 - قسنطينة</option><option>26 - المدية</option><option>27 - مستغانم</option>
+            <option>28 - المسيلة</option><option>29 - معسكر</option><option>30 - ورقلة</option>
+            <option>31 - وهران</option><option>32 - البيض</option><option>33 - إليزي</option>
+            <option>34 - برج بوعريريج</option><option>35 - بومرداس</option><option>36 - الطارف</option>
+            <option>37 - تندوف</option><option>38 - تيسمسيلت</option><option>39 - الوادي</option>
+            <option>40 - خنشلة</option><option>41 - سوق أهراس</option><option>42 - تيبازة</option>
+            <option>43 - ميلة</option><option>44 - عين الدفلى</option><option>45 - النعامة</option>
+            <option>46 - عين تموشنت</option><option>47 - غرداية</option><option>48 - غليزان</option>
+            <option>49 - تيميمون</option><option>50 - برج باجي مختار</option><option>51 - أولاد جلال</option>
+            <option>52 - بني عباس</option><option>53 - إن صالح</option><option>54 - إن قزام</option>
+            <option>55 - تقرت</option><option>56 - جانت</option><option>57 - المغير</option>
+            <option>58 - المنيعة</option>
+        </select>
+
+        <label>البلدية *</label>
+        <input type="text" id="commune" placeholder="اسم البلدية" />
+
+        <label>العنوان بالتفصيل</label>
+        <textarea id="address" placeholder="الحي، الشارع، رقم المنزل... (اختياري إذا اخترتي التوصيل للمكتب)"></textarea>
+
+        <label>طريقة التوصيل *</label>
+        <div class="delivery-options">
+            <label id="labelOffice"><input type="radio" name="delivery" value="مكتب التوصيل" onchange="updateDeliveryUI()" /> 🏢 مكتب التوصيل</label>
+            <label id="labelHome"><input type="radio" name="delivery" value="باب المنزل" onchange="updateDeliveryUI()" /> 🏠 باب المنزل</label>
+        </div>
+        <a href="delivery-prices.html" class="price-link">🚚 شوفي أسعار التوصيل لولايتك</a>
+
+        <div class="error-msg" id="errorMsg">⚠️ خاصك تعبي كل الخانات المطلوبة (*)</div>
+
+        <div id="totalBox" style="display:none; background:var(--pink-soft,#fdeef3); border-radius:14px; padding:14px; margin-top:14px; font-size:14px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>مجموع المنتجات</span><span id="sumProduct">0 دج</span></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>سعر التوصيل</span><span id="sumDelivery">0 دج</span></div>
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:17px; color:var(--pink); border-top:1px solid #f4c9d9; padding-top:8px;"><span>المجموع الكلي</span><span id="sumTotal">0 دج</span></div>
+        </div>
+
+        <button class="submit-btn" onclick="submitOrder()">✅ تأكيد الطلب عبر واتساب</button>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
+        let deliveryPrices = [];
+        let subtotal = 0;
+
+        function renderCartSummary() {
+            const container = document.getElementById('cartSummary');
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">سلتك فارغة</p>';
+                return;
+            }
+            subtotal = 0;
+            let html = '';
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const img = item.image || '';
+                html += `
+                    <div class="cart-summary-item">
+                        <img src="${img}" alt="${item.name}" />
+                        <div class="info">
+                            <b>${item.name}</b>
+                            <span>${item.price} دج × ${item.quantity}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        renderCartSummary();
+
+        fetch('delivery-prices.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(data => { deliveryPrices = data; });
+
+        function updateTotal() {
+            const wilaya = document.getElementById('wilaya').value;
+            const deliveryChecked = document.querySelector('input[name="delivery"]:checked');
+            const box = document.getElementById('totalBox');
+
+            if (cart.length === 0 || !wilaya || !deliveryChecked) {
+                box.style.display = 'none';
+                return;
+            }
+
+            const wilayaData = deliveryPrices.find(w => w.name === wilaya);
+            if (!wilayaData) {
+                box.style.display = 'none';
+                return;
+            }
+
+            const deliveryType = deliveryChecked.value === 'مكتب التوصيل' ? 'office' : 'home';
+            const deliveryPrice = wilayaData[deliveryType];
+
+            if (deliveryPrice === '-' || deliveryPrice === undefined) {
+                box.style.display = 'none';
+                alert('عذرا، التوصيل ' + deliveryChecked.value + ' غير متوفر لهذه الولاية');
+                return;
+            }
+
+            const total = subtotal + deliveryPrice;
+
+            document.getElementById('sumProduct').textContent = subtotal + ' دج';
+            document.getElementById('sumDelivery').textContent = deliveryPrice + ' دج';
+            document.getElementById('sumTotal').textContent = total + ' دج';
+            box.style.display = 'block';
+        }
+
+        document.getElementById('wilaya').addEventListener('change', updateTotal);
+
+        function updateDeliveryUI() {
+            document.querySelectorAll('.delivery-options label').forEach(l => l.classList.remove('active'));
+            const checked = document.querySelector('input[name="delivery"]:checked');
+            if (checked) checked.closest('label').classList.add('active');
+            updateTotal();
+        }
+
+        function submitOrder() {
+            if (cart.length === 0) {
+                alert('سلتك فارغة');
+                return;
+            }
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const wilaya = document.getElementById('wilaya').value;
+            const commune = document.getElementById('commune').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const delivery = document.querySelector('input[name="delivery"]:checked');
+
+            if (!fullName || !phone || !wilaya || !commune || !delivery) {
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+            document.getElementById('errorMsg').style.display = 'none';
+
+            const wilayaData = deliveryPrices.find(w => w.name === wilaya);
+            const deliveryType = delivery.value === 'مكتب التوصيل' ? 'office' : 'home';
+            const deliveryPrice = wilayaData ? wilayaData[deliveryType] : 0;
+            const total = subtotal + deliveryPrice;
+
+            let message = `🛍️ *طلب جديد (عدة منتجات)*\n\n`;
+            cart.forEach(item => {
+                message += `📦 ${item.name} — ${item.price} دج × ${item.quantity}\n`;
+            });
+            message += `\n💰 مجموع المنتجات: ${subtotal} دج\n`;
+            message += `🚚 سعر التوصيل: ${deliveryPrice} دج\n`;
+            message += `💵 *المجموع الكلي: ${total} دج*\n\n`;
+            message += `👤 الاسم: ${fullName}\n`;
+            message += `📞 الهاتف: ${phone}\n`;
+            message += `📍 الولاية: ${wilaya}\n`;
+            message += `🏘️ البلدية: ${commune}\n`;
+            if (address) message += `🏠 العنوان: ${address}\n`;
+            message += `🚚 التوصيل: ${delivery.value}`;
+
+            const waLink = 'https://wa.me/213XXXXXXXX?text=' + encodeURIComponent(message);
+            window.location.href = waLink;
+        }
+    </script>
+</body>
+</html>
