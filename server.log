@@ -4,101 +4,30 @@ nohup: ignoring input
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://10.216.159.128:5000
+ * Running on http://10.55.208.74:5000
 [33mPress CTRL+C to quit[0m
-127.0.0.1 - - [16/Aug/2026 00:13:38] "OPTIONS /update-product-category HTTP/1.1" 200 -
-[main d90fbf4] تغيير فئة منتج: 1786835329992
- 2 files changed, 3 insertions(+), 36 deletions(-)
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   ad0302f..d90fbf4  main -> main
-127.0.0.1 - - [16/Aug/2026 00:13:40] "POST /update-product-category HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:14:12] "OPTIONS /delete-product HTTP/1.1" 200 -
-[main bb6425c] حذف منتج: 1786835329992
- 2 files changed, 7 insertions(+), 12 deletions(-)
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   d90fbf4..bb6425c  main -> main
-127.0.0.1 - - [16/Aug/2026 00:14:15] "POST /delete-product HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:14:16] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:15:23] "OPTIONS /add-product HTTP/1.1" 200 -
-[main ace56d7] اضافة منتج: فوندغوب مشرشفة موتيف بابيو ❤️🎀
- 9 files changed, 20 insertions(+)
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/1.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/2.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/3.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/4.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/5.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/6.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786835723546/7.jpg"
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   bb6425c..ace56d7  main -> main
-127.0.0.1 - - [16/Aug/2026 00:15:29] "POST /add-product HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:15:29] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:16:23] "OPTIONS /delete-product HTTP/1.1" 200 -
-[main 75882b1] حذف منتج: 1786835723546
- 2 files changed, 15 insertions(+), 12 deletions(-)
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   ace56d7..75882b1  main -> main
-127.0.0.1 - - [16/Aug/2026 00:16:27] "POST /delete-product HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:16:30] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 00:27:08] "OPTIONS /add-product HTTP/1.1" 200 -
-[main 6e83f0f] اضافة منتج: فوندغوب مشرشفة موتيف بابيو
- 9 files changed, 20 insertions(+)
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/1.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/2.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/3.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/4.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/5.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/6.jpg"
- create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\272\331\210\330\250-\331\205\330\264\330\261\330\264\331\201\330\251-\331\205\331\210\330\252\331\212\331\201-\330\250\330\247\330\250\331\212\331\210-1786836428497/7.jpg"
-127.0.0.1 - - [16/Aug/2026 00:27:15] "GET /get-products HTTP/1.1" 200 -
-To https://github.com/mahdikelai/Boutique-bon-plan.git
-   75882b1..6e83f0f  main -> main
-127.0.0.1 - - [16/Aug/2026 00:27:18] "POST /add-product HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 08:34:56] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:01] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:07] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:11] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:17] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:22] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:27] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:32] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:37] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:42] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:47] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:52] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 08:35:57] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:05] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:06] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:15] "GET /get-products HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 09:44:15] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:16] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:26] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:26] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:44:36] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:45:25] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:45:26] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:45:32] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:46:28] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 09:46:28] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:17] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:25] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:26] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:35] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:36] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:48:49] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:49:38] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:49:44] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:49:44] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:49:54] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:49:55] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:04] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:04] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:15] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:15] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:25] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:25] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:35] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:35] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:44] "OPTIONS /add-product HTTP/1.1" 200 -
-127.0.0.1 - - [16/Aug/2026 11:50:44] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
-127.0.0.1 - - [16/Aug/2026 11:50:44] "[33mGET /pending-changes HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Aug/2026 11:52:35] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:35] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:36] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:37] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:40] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:47] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:48] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:57] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 11:52:58] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:17] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:21] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:26] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:31] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:36] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:41] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:46] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:11:51] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:13:42] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:13:46] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:13:51] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:13:56] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:01] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:07] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:11] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:11] "OPTIONS /add-product HTTP/1.1" 200 -
