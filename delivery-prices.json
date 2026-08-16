@@ -1,268 +1,268 @@
 [
   {
     "name": "01 - أدرار",
-    "office": 1100,
-    "home": 600
+    "office": 600,
+    "home": 1100
   },
   {
     "name": "02 - الشلف",
-    "office": 600,
-    "home": 400
+    "office": 400,
+    "home": 600
   },
   {
     "name": "03 - الأغواط",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "04 - أم البواقي",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "05 - باتنة",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "06 - بجاية",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "07 - بسكرة",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "08 - بشار",
-    "office": 1100,
-    "home": 600
+    "office": 600,
+    "home": 1100
   },
   {
     "name": "09 - البليدة",
-    "office": 600,
-    "home": 250
+    "office": 250,
+    "home": 600
   },
   {
     "name": "10 - البويرة",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "11 - تمنراست",
-    "office": 1100,
-    "home": 600
+    "office": 600,
+    "home": 1100
   },
   {
     "name": "12 - تبسة",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "13 - تلمسان",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "14 - تيارت",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "15 - تيزي وزو",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "16 - الجزائر العاصمة",
-    "office": 500,
-    "home": 250
+    "office": 250,
+    "home": 500
   },
   {
     "name": "17 - الجلفة",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "18 - جيجل",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "19 - سطيف",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "20 - سعيدة",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "21 - سكيكدة",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "22 - سيدي بلعباس",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "23 - عنابة",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "24 - قالمة",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "25 - قسنطينة",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "26 - المدية",
-    "office": 600,
-    "home": 400
+    "office": 400,
+    "home": 600
   },
   {
     "name": "27 - مستغانم",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "28 - المسيلة",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "29 - معسكر",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "30 - ورقلة",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "31 - وهران",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "32 - البيض",
-    "office": 800,
-    "home": 500
+    "office": 500,
+    "home": 800
   },
   {
     "name": "33 - إليزي",
-    "office": 1300,
-    "home": 600
+    "office": 600,
+    "home": 1300
   },
   {
     "name": "34 - برج بوعريريج",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "35 - بومرداس",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "36 - الطارف",
-    "office": 800,
-    "home": 400
+    "office": 400,
+    "home": 800
   },
   {
     "name": "37 - تندوف",
-    "office": 1300,
-    "home": 600
+    "office": 600,
+    "home": 1300
   },
   {
     "name": "38 - تيسمسيلت",
-    "office": 600,
-    "home": 400
+    "office": 400,
+    "home": 600
   },
   {
     "name": "39 - الوادي",
-    "office": 1000,
-    "home": 500
+    "office": 500,
+    "home": 1000
   },
   {
     "name": "40 - خنشلة",
-    "office": 800,
-    "home": 500
+    "office": 500,
+    "home": 800
   },
   {
     "name": "41 - سوق أهراس",
-    "office": 800,
-    "home": 500
+    "office": 500,
+    "home": 800
   },
   {
     "name": "42 - تيبازة",
-    "office": 600,
-    "home": 400
+    "office": 400,
+    "home": 600
   },
   {
     "name": "43 - ميلة",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "44 - عين الدفلى",
-    "office": 500,
-    "home": 400
+    "office": 400,
+    "home": 500
   },
   {
     "name": "45 - النعامة",
-    "office": 800,
-    "home": 500
+    "office": 500,
+    "home": 800
   },
   {
     "name": "46 - عين تموشنت",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "47 - غرداية",
-    "office": 1000,
-    "home": 500
+    "office": 500,
+    "home": 1000
   },
   {
     "name": "48 - غليزان",
-    "office": 700,
-    "home": 400
+    "office": 400,
+    "home": 700
   },
   {
     "name": "49 - تيميمون",
-    "office": 1100,
-    "home": 600
+    "office": 600,
+    "home": 1100
   },
   {
     "name": "50 - برج باجي مختار",
-    "office": 1100,
-    "home": 0
+    "office": 0,
+    "home": 1100
   },
   {
     "name": "51 - أولاد جلال",
-    "office": 900,
-    "home": 500
+    "office": 500,
+    "home": 900
   },
   {
     "name": "52 - بني عباس",
-    "office": 700,
-    "home": 0
+    "office": 0,
+    "home": 700
   },
   {
     "name": "53 - إن صالح",
-    "office": 1000,
-    "home": 600
+    "office": 600,
+    "home": 1000
   },
   {
     "name": "54 - إن قزام",
@@ -271,22 +271,22 @@
   },
   {
     "name": "55 - تقرت",
-    "office": 900,
-    "home": 0
+    "office": 0,
+    "home": 900
   },
   {
     "name": "56 - جانت",
-    "office": 1100,
-    "home": 0
+    "office": 0,
+    "home": 1100
   },
   {
     "name": "57 - المغير",
-    "office": 900,
-    "home": 0
+    "office": 0,
+    "home": 900
   },
   {
     "name": "58 - المنيعة",
-    "office": 1000,
-    "home": 500
+    "office": 500,
+    "home": 1000
   }
 ]
