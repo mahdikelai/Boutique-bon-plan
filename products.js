@@ -104,6 +104,19 @@ const products = [
     style: ""
   }
 
+  ,{
+    id: 1786877444840, category: "robes",
+    brand: "Boutique Bon Plan",
+    name: "براسيار جيب ❤️",
+    price: 1000,
+    images: [
+      "images/products/براسيار-جيب-1786877444840/1.jpg", "images/products/براسيار-جيب-1786877444840/2.jpg", "images/products/براسيار-جيب-1786877444840/3.jpg", "images/products/براسيار-جيب-1786877444840/4.jpg", "images/products/براسيار-جيب-1786877444840/5.jpg", "images/products/براسيار-جيب-1786877444840/6.jpg", "images/products/براسيار-جيب-1786877444840/7.jpg", "images/products/براسيار-جيب-1786877444840/8.jpg", "images/products/براسيار-جيب-1786877444840/9.jpg", "images/products/براسيار-جيب-1786877444840/10.jpg"
+    ],
+    rating: 5.0,
+    color: "",
+    style: "", description: "🌸 بسم الله ما شاء الله ❤️\n✨ براسيار جيب ✨\n👗 لاطاي ستوندارد 🥰 \n👗 أناقة وتميّز لكل امرأة تحب تكون أنيقة 💕\n🚚 التوصيل متوفر لـ 58 ولاية\n💰 السعر: 1000 دج فقط 🤐\n📦 الدفع عند الاستلام\n😍 مرحباً بكم، أطلبي الآن 📝", stock: 5
+  }
+
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
   ,{
     id: 102, category: "lingerie",
