@@ -93,6 +93,12 @@
 
         <div class="error-msg" id="errorMsg">⚠️ خاصك تعبي كل الخانات المطلوبة (*)</div>
 
+        <div id="totalBox" style="display:none; background:var(--pink-soft,#fdeef3); border-radius:14px; padding:14px; margin-top:14px; font-size:14px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>سعر المنتج</span><span id="sumProduct">0 دج</span></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>سعر التوصيل</span><span id="sumDelivery">0 دج</span></div>
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:17px; color:var(--pink); border-top:1px solid #f4c9d9; padding-top:8px;"><span>المجموع الكلي</span><span id="sumTotal">0 دج</span></div>
+        </div>
+
         <button class="submit-btn" onclick="submitOrder()">✅ تأكيد الطلب عبر واتساب</button>
     </div>
 
@@ -101,6 +107,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = parseInt(urlParams.get('id'));
         let currentProduct = null;
+        let deliveryPrices = [];
 
         loadAllProducts().then(products => {
             currentProduct = products.find(p => p.id === productId);
@@ -114,10 +121,51 @@
             }
         });
 
+        fetch('delivery-prices.json?t=' + Date.now())
+            .then(res => res.json())
+            .then(data => { deliveryPrices = data; });
+
+        function updateTotal() {
+            const wilaya = document.getElementById('wilaya').value;
+            const deliveryChecked = document.querySelector('input[name="delivery"]:checked');
+            const box = document.getElementById('totalBox');
+
+            if (!currentProduct || !wilaya || !deliveryChecked) {
+                box.style.display = 'none';
+                return;
+            }
+
+            const wilayaData = deliveryPrices.find(w => w.name === wilaya);
+            if (!wilayaData) {
+                box.style.display = 'none';
+                return;
+            }
+
+            const deliveryType = deliveryChecked.value === 'مكتب التوصيل' ? 'office' : 'home';
+            const deliveryPrice = wilayaData[deliveryType];
+
+            if (deliveryPrice === '-' || deliveryPrice === undefined) {
+                box.style.display = 'none';
+                alert('عذرا، التوصيل ' + deliveryChecked.value + ' غير متوفر لهذه الولاية');
+                return;
+            }
+
+            const productPrice = currentProduct.price;
+            const total = productPrice + deliveryPrice;
+
+            document.getElementById('sumProduct').textContent = productPrice + ' دج';
+            document.getElementById('sumDelivery').textContent = deliveryPrice + ' دج';
+            document.getElementById('sumTotal').textContent = total + ' دج';
+            box.style.display = 'block';
+        }
+
+        document.getElementById('wilaya').addEventListener('change', updateTotal);
+
         function updateDeliveryUI() {
             document.querySelectorAll('.delivery-options label').forEach(l => l.classList.remove('active'));
             const checked = document.querySelector('input[name="delivery"]:checked');
             if (checked) checked.closest('label').classList.add('active');
+            updateTotal();
         }
 
         function submitOrder() {
