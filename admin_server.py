@@ -96,7 +96,6 @@ def add_product():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'اضافة منتج: {name}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True, "message": "تم اضافة المنتج ونشره بنجاح"})
 
@@ -128,7 +127,6 @@ def delete_product():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'حذف منتج: {product_id}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True, "message": "تم حذف المنتج ونشر التحديث"})
 
@@ -192,7 +190,6 @@ def update_delivery_price():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'تحديث سعر التوصيل: {wilaya_name}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -217,7 +214,6 @@ def delete_delivery_price():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'حذف: {wilaya_name}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -278,7 +274,6 @@ def save_category():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'تحديث قسم: {label}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -303,7 +298,6 @@ def delete_category():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'حذف قسم: {cat_id}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -367,7 +361,6 @@ def save_banner():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'تحديث بانر: {banner_id}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -392,7 +385,6 @@ def delete_banner():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'حذف بانر: {banner_id}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -425,7 +417,6 @@ def update_product_category():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'تغيير فئة منتج: {product_id}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -452,7 +443,6 @@ def save_colors():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', 'تحديث ألوان الموقع'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -501,7 +491,6 @@ def add_review():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', f'تقييم جديد: {name}'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
@@ -526,10 +515,33 @@ def delete_review():
 
         subprocess.run(['git', 'add', '.'], cwd=BASE_DIR, check=True)
         subprocess.run(['git', 'commit', '-m', 'حذف تقييم'], cwd=BASE_DIR, check=True)
-        subprocess.run(['git', 'push'], cwd=BASE_DIR, check=True)
 
         return jsonify({"success": True})
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/pending-changes', methods=['GET'])
+def pending_changes():
+    try:
+        result = subprocess.run(
+            ['git', 'log', 'origin/main..HEAD', '--oneline'],
+            cwd=BASE_DIR, capture_output=True, text=True
+        )
+        commits = [l for l in result.stdout.strip().split('\n') if l]
+        return jsonify({"count": len(commits), "commits": commits})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/publish', methods=['POST'])
+def publish():
+    try:
+        result = subprocess.run(
+            ['git', 'push'], cwd=BASE_DIR, capture_output=True, text=True
+        )
+        if result.returncode != 0:
+            return jsonify({"error": result.stderr}), 500
+        return jsonify({"success": True})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -45,6 +45,10 @@
     </div>
     <a href="index.html" class="back-link">→ رجوع للموقع</a>
     <div class="container">
+        <div id="publishBar" style="position:sticky; top:0; z-index:100; background:white; padding:10px 0; margin-bottom:10px;">
+            <button onclick="publishNow()" id="publishBtn" style="width:100%; padding:12px; background:#1a1a1a; color:white; border:none; border-radius:10px; font-weight:800; font-size:14px;">🚀 نشر التحديثات (<span id="pendingCount">0</span> بالانتظار)</button>
+        </div>
+
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('add')">➕ إضافة منتج</button>
             <button class="tab-btn" onclick="showTab('manage')">📦 المنتجات المزادة</button>
@@ -767,6 +771,42 @@
             })
             .catch(() => alert('❌ السيرفر غير متصل'));
         }
+
+        function updatePendingCount() {
+            fetch('http://localhost:5000/pending-changes')
+                .then(res => res.json())
+                .then(data => {
+                    const el = document.getElementById('pendingCount');
+                    if (el) el.textContent = data.count || 0;
+                })
+                .catch(() => {});
+        }
+
+        function publishNow() {
+            const btn = document.getElementById('publishBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ جاري النشر...';
+            fetch('http://localhost:5000/publish', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('✅ تم نشر كل التحديثات بنجاح');
+                    } else {
+                        alert('❌ خطأ: ' + (data.error || 'مشكل غير معروف'));
+                    }
+                    updatePendingCount();
+                    btn.disabled = false;
+                    btn.innerHTML = '🚀 نشر التحديثات (<span id="pendingCount">0</span> بالانتظار)';
+                })
+                .catch(() => {
+                    alert('❌ السيرفر غير متصل');
+                    btn.disabled = false;
+                });
+        }
+
+        updatePendingCount();
+        setInterval(updatePendingCount, 5000);
+
     </script>
 </body>
 </html>
