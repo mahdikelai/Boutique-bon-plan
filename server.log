@@ -31,3 +31,21 @@ nohup: ignoring input
 127.0.0.1 - - [16/Aug/2026 15:14:07] "GET /pending-changes HTTP/1.1" 200 -
 127.0.0.1 - - [16/Aug/2026 15:14:11] "GET /pending-changes HTTP/1.1" 200 -
 127.0.0.1 - - [16/Aug/2026 15:14:11] "OPTIONS /add-product HTTP/1.1" 200 -
+[main 702e67d] اضافة منتج: بيجامة كيتي
+ 6 files changed, 39 insertions(+), 97 deletions(-)
+ create mode 100644 "images/products/\330\250\331\212\330\254\330\247\331\205\330\251-\331\203\331\212\330\252\331\212-1786889651477/1.jpg"
+ create mode 100644 "images/products/\330\250\331\212\330\254\330\247\331\205\330\251-\331\203\331\212\330\252\331\212-1786889651477/2.jpg"
+ create mode 100644 "images/products/\330\250\331\212\330\254\330\247\331\205\330\251-\331\203\331\212\330\252\331\212-1786889651477/3.jpg"
+ create mode 100644 "images/products/\330\250\331\212\330\254\330\247\331\205\330\251-\331\203\331\212\330\252\331\212-1786889651477/4.jpg"
+127.0.0.1 - - [16/Aug/2026 15:14:11] "POST /add-product HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:16] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:21] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:23] "POST /publish HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:24] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:26] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:31] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:36] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 15:14:41] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 17:53:01] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 19:04:35] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 19:04:41] "GET /pending-changes HTTP/1.1" 200 -
