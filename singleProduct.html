@@ -156,12 +156,9 @@
             white-space: nowrap;
         }
         .add-to-cart-btn:hover { background: #9a4a5a; transform: scale(1.02); }
-        .cart-message {
-            margin-top: 8px;
-            font-size: 14px;
-            color: #2d7d46;
-            display: none;
-        }
+        .cart-message { position: fixed; top: 90px; left: 50%; transform: translateX(-50%) translateY(-30px); background: #2d7d46; color: white; padding: 14px 26px; border-radius: 40px; font-weight: 700; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 10000; opacity: 0; pointer-events: none; transition: all 0.35s ease; text-align: center; white-space: nowrap; }
+        .cart-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .size-warning { color: #dc2626; font-size: 13px; font-weight: 700; margin-bottom: 10px; display: none; }
 
         /* Lightbox */
         .lightbox {
@@ -309,13 +306,15 @@
             <div style="font-weight:700; font-size:14px; margin-bottom:8px;">اختاري المقاس:</div>
             <div id="sizeOptions" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
         </div>
-        <div class="gallery" id="productGallery"></div>
+        <div class="size-warning" id="sizeWarning">⚠️ خاصك تختاري المقاس أولاً</div>
+    <div class="gallery" id="productGallery"></div>
         <p id="productBrand"></p>
         <p id="productDescription" style="color:#555; font-size:14px; line-height:1.6; margin:10px 0;"></p>
         <div style="display:flex; gap:10px;">
             <button class="add-to-cart-btn" onclick="addToCart()" style="flex:1;">🛒 أضف إلى السلة</button>
-            <a id="orderNowBtn" href="#" class="order-now-btn" style="flex:1; text-align:center; display:flex; align-items:center; justify-content:center;">🛍️ أطلب الآن</a>
+            <a id="orderNowBtn" href="#" class="order-now-btn" style="flex:1; text-align:center; display:flex; align-items:center; justify-content:center;" onclick="return checkSizeBeforeOrder(event)">🛍️ أطلب الآن</a>
         </div>
+        <div class="cart-message" id="cartMessage">✅ تمت الإضافة إلى السلة!</div>
 
         <div style="margin-top:20px; background:var(--pink-soft,#fdeef3); border-radius:12px; padding:14px; font-size:13px; line-height:2;">
             <div>🚚 <b>الشحن:</b> توصيل لـ58 ولاية عبر المكتب أو للمنزل</div>
@@ -447,13 +446,28 @@
             if (window.updateOrderBtnLink) window.updateOrderBtnLink();
         }
 
-        function addToCart() {
+        function checkSizeBeforeOrder(e) {
+        if (!currentProduct) { e.preventDefault(); return false; }
+        const needsSize = currentProduct.sizes && currentProduct.sizes.length && !(currentProduct.sizes.length === 1 && currentProduct.sizes[0] === 'Standard');
+        if (needsSize && !selectedSize) {
+            e.preventDefault();
+            const w = document.getElementById('sizeWarning');
+            if (w) { w.style.display = 'block'; w.scrollIntoView({behavior:'smooth', block:'center'}); }
+            return false;
+        }
+        return true;
+    }
+
+    function addToCart() {
             if (!currentProduct) return;
+            const btn = document.querySelector('.add-to-cart-btn');
+            if (btn && btn.disabled) return;
             const needsSize = currentProduct.sizes && currentProduct.sizes.length && !(currentProduct.sizes.length === 1 && currentProduct.sizes[0] === 'Standard');
             if (needsSize && !selectedSize) {
-                alert('عمري، خاصك تختاري المقاس قبل الإضافة للسلة');
-                return;
-            }
+        const w = document.getElementById('sizeWarning');
+        if (w) { w.style.display = 'block'; w.scrollIntoView({behavior:'smooth', block:'center'}); }
+        return;
+    }
             let cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
             const cartKey = currentProduct.id + '-' + (selectedSize || 'Standard');
             const existing = cart.find(item => (item.id + '-' + (item.size || 'Standard')) === cartKey);
@@ -471,9 +485,18 @@
             }
             localStorage.setItem('boutique_cart', JSON.stringify(cart));
             const msg = document.getElementById('cartMessage');
-            msg.style.display = 'block';
-            setTimeout(() => { msg.style.display = 'none'; }, 2500);
+    if (msg) {
+        msg.classList.add('show');
+        setTimeout(() => { msg.classList.remove('show'); }, 2500);
+    }
+    const w2 = document.getElementById('sizeWarning');
+    if (w2) w2.style.display = 'none';
             updateCartCount();
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+                setTimeout(() => { btn.disabled = false; btn.style.opacity = '1'; }, 1200);
+            }
         }
 
         function updateCartCount() {
