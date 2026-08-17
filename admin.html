@@ -658,6 +658,8 @@
             const stock = document.getElementById('pstock').value.trim();
             const sizes = Array.from(document.querySelectorAll('.size-check:checked')).map(c => c.value);
 
+            alert('تشخيص: المقاسات المختارة = [' + sizes.join(', ') + ']  —  عدد: ' + sizes.length);
+
             if (!name || !price || selectedImages.length === 0) {
                 alert('عمري، خاصك تعبي على الأقل: الاسم، السعر، وصورة وحدة');
                 return;
