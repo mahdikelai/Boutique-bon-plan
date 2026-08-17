@@ -305,6 +305,10 @@
             <span style="background:var(--pink-soft,#fdeef3); color:var(--pink,#e6007e); padding:5px 10px; border-radius:20px; font-size:11px; font-weight:700;">🚚 توصيل 58 ولاية</span>
         </div>
         <div id="stockNotice" style="display:none; color:#e6007e; font-size:13px; font-weight:700; margin-bottom:10px;"></div>
+        <div id="sizeSelector" style="display:none; margin-bottom:14px;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:8px;">اختاري المقاس:</div>
+            <div id="sizeOptions" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+        </div>
         <div class="gallery" id="productGallery"></div>
         <p id="productBrand"></p>
         <p id="productDescription" style="color:#555; font-size:14px; line-height:1.6; margin:10px 0;"></p>
@@ -359,8 +363,21 @@
                     return;
                 }
                 currentProduct = product;
+                if (product.sizes && product.sizes.length && !(product.sizes.length === 1 && product.sizes[0] === 'Standard')) {
+                    const sizeSelector = document.getElementById('sizeSelector');
+                    const sizeOptions = document.getElementById('sizeOptions');
+                    sizeSelector.style.display = 'block';
+                    sizeOptions.innerHTML = product.sizes.map(s =>
+                        `<button type="button" class="size-btn" data-size="${s}" onclick="selectSize('${s}')" style="padding:8px 16px; border-radius:10px; border:2px solid var(--pink,#e6007e); background:white; color:var(--pink,#e6007e); font-weight:700; cursor:pointer;">${s}</button>`
+                    ).join('');
+                }
                 const orderBtn = document.getElementById('orderNowBtn');
                 if (orderBtn) orderBtn.href = 'order.html?id=' + product.id;
+                window.updateOrderBtnLink = function() {
+                    let link = 'order.html?id=' + product.id;
+                    if (selectedSize) link += '&size=' + encodeURIComponent(selectedSize);
+                    if (orderBtn) orderBtn.href = link;
+                };
                 document.getElementById('productName').textContent = product.name;
                 document.getElementById('productPrice').textContent = product.price + ' دج';
                 document.getElementById('productBrand').textContent = 'ماركة: ' + (product.brand || 'Boutique Bon Plan');
@@ -414,10 +431,32 @@
                 console.error(err);
             });
 
+        let selectedSize = null;
+
+        function selectSize(s) {
+            selectedSize = s;
+            document.querySelectorAll('.size-btn').forEach(b => {
+                if (b.dataset.size === s) {
+                    b.style.background = 'var(--pink,#e6007e)';
+                    b.style.color = 'white';
+                } else {
+                    b.style.background = 'white';
+                    b.style.color = 'var(--pink,#e6007e)';
+                }
+            });
+            if (window.updateOrderBtnLink) window.updateOrderBtnLink();
+        }
+
         function addToCart() {
             if (!currentProduct) return;
+            const needsSize = currentProduct.sizes && currentProduct.sizes.length && !(currentProduct.sizes.length === 1 && currentProduct.sizes[0] === 'Standard');
+            if (needsSize && !selectedSize) {
+                alert('عمري، خاصك تختاري المقاس قبل الإضافة للسلة');
+                return;
+            }
             let cart = JSON.parse(localStorage.getItem('boutique_cart') || '[]');
-            const existing = cart.find(item => item.id === currentProduct.id);
+            const cartKey = currentProduct.id + '-' + (selectedSize || 'Standard');
+            const existing = cart.find(item => (item.id + '-' + (item.size || 'Standard')) === cartKey);
             if (existing) {
                 existing.quantity += 1;
             } else {
@@ -426,7 +465,8 @@
                     name: currentProduct.name,
                     price: currentProduct.price,
                     image: (currentProduct.images ? currentProduct.images[0] : currentProduct.img) || '',
-                    quantity: 1
+                    quantity: 1,
+                    size: selectedSize || null
                 });
             }
             localStorage.setItem('boutique_cart', JSON.stringify(cart));

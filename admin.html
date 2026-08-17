@@ -102,6 +102,16 @@
                     </div>
                 </div>
 
+                <label>المقاس المتوفر</label>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="Standard" style="width:auto;" /> Standard</label>
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="S" style="width:auto;" /> S</label>
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="M" style="width:auto;" /> M</label>
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="L" style="width:auto;" /> L</label>
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="XL" style="width:auto;" /> XL</label>
+                    <label style="display:flex; align-items:center; gap:4px; background:#fdeef3; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px; cursor:pointer;"><input type="checkbox" class="size-check" value="XXL" style="width:auto;" /> XXL</label>
+                </div>
+
                 <label>وصف قصير (اختياري)</label>
                 <textarea id="pdesc" placeholder="👗 أناقة وتميّز..."></textarea>
             </div>
@@ -646,6 +656,7 @@
             const style = document.getElementById('pstyle').value.trim();
             const desc = document.getElementById('pdesc').value.trim();
             const stock = document.getElementById('pstock').value.trim();
+            const sizes = Array.from(document.querySelectorAll('.size-check:checked')).map(c => c.value);
 
             if (!name || !price || selectedImages.length === 0) {
                 alert('عمري، خاصك تعبي على الأقل: الاسم، السعر، وصورة وحدة');
@@ -665,6 +676,7 @@
             };
             if (desc) product.description = desc;
             if (stock) product.stock = parseInt(stock);
+            if (sizes.length) product.sizes = sizes;
 
             document.getElementById('successMsg').innerHTML = '⏳ جاري النشر...';
             document.getElementById('successMsg').classList.add('show');

@@ -106,6 +106,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const productId = parseInt(urlParams.get('id'));
+        const selectedSize = urlParams.get('size') || '';
         let currentProduct = null;
         let deliveryPrices = [];
 
@@ -115,7 +116,7 @@
                 const imgSrc = currentProduct.images ? currentProduct.images[0] : currentProduct.img;
                 document.getElementById('prodImg').src = imgSrc;
                 document.getElementById('prodName').textContent = currentProduct.name;
-                document.getElementById('prodPrice').textContent = currentProduct.price + ' دج';
+                document.getElementById('prodPrice').textContent = currentProduct.price + ' دج' + (selectedSize ? ' — المقاس: ' + selectedSize : '');
             } else {
                 document.getElementById('prodName').textContent = 'منتج غير محدد';
             }
@@ -187,6 +188,7 @@
 
             let message = `🛍️ *طلب جديد*\n\n`;
             message += `📦 المنتج: ${productName}\n`;
+            if (selectedSize) message += `📏 المقاس: ${selectedSize}\n`;
             message += `💰 السعر: ${productPrice}\n\n`;
             message += `👤 الاسم: ${fullName}\n`;
             message += `📞 الهاتف: ${phone}\n`;

@@ -118,7 +118,7 @@
                     <div class="cart-summary-item">
                         <img src="${img}" alt="${item.name}" />
                         <div class="info">
-                            <b>${item.name}</b>
+                            <b>${item.name}</b>${item.size ? ' <span style="font-size:11px; color:#888;">(المقاس: ' + item.size + ')</span>' : ''}
                             <span>${item.price} دج × ${item.quantity}</span>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
 
             let message = `🛍️ *طلب جديد (عدة منتجات)*\n\n`;
             cart.forEach(item => {
-                message += `📦 ${item.name} — ${item.price} دج × ${item.quantity}\n`;
+                message += `📦 ${item.name}${item.size ? ' (مقاس: ' + item.size + ')' : ''} — ${item.price} دج × ${item.quantity}\n`;
             });
             message += `\n💰 مجموع المنتجات: ${subtotal} دج\n`;
             message += `🚚 سعر التوصيل: ${deliveryPrice} دج\n`;
