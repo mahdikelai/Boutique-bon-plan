@@ -658,7 +658,11 @@
             const stock = document.getElementById('pstock').value.trim();
             const sizes = Array.from(document.querySelectorAll('.size-check:checked')).map(c => c.value);
 
-            alert('تشخيص: المقاسات المختارة = [' + sizes.join(', ') + ']  —  عدد: ' + sizes.length);
+            const allBoxes = document.querySelectorAll('.size-check');
+            let debugMsg = 'عدد المربعات الكلي: ' + allBoxes.length + '\n';
+            allBoxes.forEach(b => { debugMsg += b.value + ' = ' + (b.checked ? 'مؤشر' : 'غير مؤشر') + '\n'; });
+            debugMsg += 'المقاسات المختارة = [' + sizes.join(', ') + ']';
+            alert(debugMsg);
 
             if (!name || !price || selectedImages.length === 0) {
                 alert('عمري، خاصك تعبي على الأقل: الاسم، السعر، وصورة وحدة');

@@ -201,3 +201,104 @@ nohup: ignoring input
 127.0.0.1 - - [18/Aug/2026 00:47:43] "GET /pending-changes HTTP/1.1" 200 -
 127.0.0.1 - - [18/Aug/2026 00:47:48] "GET /pending-changes HTTP/1.1" 200 -
 127.0.0.1 - - [18/Aug/2026 00:47:50] "OPTIONS /add-product HTTP/1.1" 200 -
+[main 46ce5d7] اضافة منتج: فوندرب سامبل
+ 10 files changed, 66 insertions(+)
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/1.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/2.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/3.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/4.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/5.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/6.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/7.jpg"
+ create mode 100644 "images/products/\331\201\331\210\331\206\330\257\330\261\330\250-\330\263\330\247\331\205\330\250\331\204-1787010470693/8.jpg"
+127.0.0.1 - - [18/Aug/2026 00:47:50] "POST /add-product HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:47:55] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:47:58] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:06] "POST /publish HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:56] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:48:59] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:49:04] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:49:09] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:49:30] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:49:30] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:49:40] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:01] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:01] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:02] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:11] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:22] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:22] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:27] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:55:33] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:14] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:14] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:22] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:23] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:28] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:35] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:36] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:45] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:46] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:56] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:56:56] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:07] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:07] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:20] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:20] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:21] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:45] "OPTIONS /add-product HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:45] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:45] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:50] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:59] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:57:59] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:09] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:09] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:19] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:19] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:29] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:29] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:39] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:39] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:44] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:45] "POST /publish HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:49] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:58:50] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:00] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:00] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:09] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:10] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:20] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:20] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 00:59:30] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:01:34] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:01:34] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:01:46] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:01:46] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:27] "GET /get-products HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:27] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:27] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:29] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:34] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:51] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:05:53] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:01] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:06] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:08] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:13] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:23] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:23] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:28] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:33] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:38] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:43] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:48] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:53] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:06:58] "GET /pending-changes HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:07:06] "OPTIONS /add-product HTTP/1.1" 200 -
+127.0.0.1 - - [18/Aug/2026 01:07:06] "GET /pending-changes HTTP/1.1" 200 -

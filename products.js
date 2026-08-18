@@ -169,6 +169,19 @@ const products = [
     style: "", description: "🌸 بسم الله ما شاء الله ❤️\n✨ فوندروب سامبل ✨\n👗 لاطاي s m l xl xxl 🥰 \n👗 أناقة وتميّز لكل امرأة تحب تكون أنيقة 💕\n🚚 التوصيل متوفر لـ 58 ولاية\n💰 السعر: 400 دج فقط 🤐\n📦 الدفع عند الاستلام\n😍 مرحباً بكم، اطلبيها الآن 📝", stock: 5
   }
 
+  ,{
+    id: 1787011626603, category: "robes",
+    brand: "Boutique Bon Plan",
+    name: "فوندروب كروازي",
+    price: 900,
+    images: [
+      "images/products/فوندروب-كروازي-1787011626603/1.jpg", "images/products/فوندروب-كروازي-1787011626603/2.jpg", "images/products/فوندروب-كروازي-1787011626603/3.jpg", "images/products/فوندروب-كروازي-1787011626603/4.jpg", "images/products/فوندروب-كروازي-1787011626603/5.jpg", "images/products/فوندروب-كروازي-1787011626603/6.jpg", "images/products/فوندروب-كروازي-1787011626603/7.jpg", "images/products/فوندروب-كروازي-1787011626603/8.jpg", "images/products/فوندروب-كروازي-1787011626603/9.jpg", "images/products/فوندروب-كروازي-1787011626603/10.jpg"
+    ],
+    rating: 5.0,
+    color: "",
+    style: "", stock: 5
+  }
+
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
   ,{
     id: 102, category: "lingerie",
