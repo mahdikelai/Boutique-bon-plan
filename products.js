@@ -182,6 +182,19 @@ const products = [
     style: "", stock: 5
   }
 
+  ,{
+    id: 1787012097226, category: "lingerie",
+    brand: "Boutique Bon Plan",
+    name: "بيستي شورت مكمش ✅",
+    price: 1100,
+    images: [
+      "images/products/بيستي-شورت-مكمش-1787012097226/1.jpg", "images/products/بيستي-شورت-مكمش-1787012097226/2.jpg", "images/products/بيستي-شورت-مكمش-1787012097226/3.jpg", "images/products/بيستي-شورت-مكمش-1787012097226/4.jpg"
+    ],
+    rating: 5.0,
+    color: "",
+    style: "", stock: 5, sizes: ["S", "M", "L", "XL", "XXL"]
+  }
+
   /* باش تزيد منتج جديد، انسخ هذا القالب وبدل القيم:
   ,{
     id: 102, category: "lingerie",
