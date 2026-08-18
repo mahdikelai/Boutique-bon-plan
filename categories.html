@@ -87,5 +87,11 @@
                 ).join('');
             });
     </script>
+
+<script>
+window.addEventListener('pageshow', function(e) {
+    if (typeof updateCartCount === 'function') updateCartCount();
+});
+</script>
 </body>
 </html>
